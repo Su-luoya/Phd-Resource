@@ -1,0 +1,566 @@
+\documentclass[UTF8, 16pt]{beamer}
+ 
+% Chinese
+\usepackage{CJKutf8}
+
+% Font
+\usepackage{bookman}
+\usefonttheme{serif}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgbonum}
+
+% Other packages
+\usepackage{appendixnumberbeamer}
+\usepackage{latexsym, amsmath, xcolor, multicol, booktabs}
+\usepackage{graphicx, listings, stackengine}
+\usepackage{multirow}
+\usepackage{hyperref}
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+% SUFE.sty
+\usepackage{SUFE} 
+% Bibtex
+\usepackage[citestyle=authoryear-comp, 
+			backend=bibtex, 
+			bibstyle=numeric, 
+%			sorting=ynt
+			]{biblatex}
+\setbeamertemplate{bibliography item}[text]
+\addbibresource{ref.bib}
+
+% Other setting
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Title page
+%% Author
+\author[Haotian Deng] % The short name
+{
+Aditya Chaudhry and Sangmin S. Oh \\ \ \\
+Presented by Haotian Deng
+%邓皓天
+%\inst{1}
+%\and
+%Yuting Liu 
+%\inst{2}
+} 
+%% Title & Subtitle
+\title[High-Frequency Expectations from Asset Prices: A Machine Learning Approach]{High-Frequency Expectations from Asset Prices: A Machine Learning Approach}
+\subtitle{}
+%% Institution
+\institute[SUFE]
+{
+%\inst{1}
+Shanghai University of Finance and Economics
+%上海财经大学金融学院
+%\and
+%\inst{2}
+%Shanghai University of Finance and Economics
+}
+%% Date
+\date[VLC 2021]
+{\today}
+%%Logo
+%\logo{\includegraphics[height=1cm]{sufe_logo}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Document begins
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+%Title page
+\begin{frame}[noframenumbering]
+%	\thispagestyle{empty}
+	\titlepage
+	% Logo
+	\vspace{-0.5cm}
+    \begin{figure}[htpb] 
+        \begin{center}
+            \includegraphics[width=0.19 \linewidth]{sufe_logo.png}
+        \end{center}  
+    \end{figure}
+\end{frame}
+
+% Contents page
+\begin{frame}{Contents}
+	\tableofcontents[sectionstyle=show,
+ 	subsectionstyle=show/shaded/hide,
+ 	subsubsectionstyle=show/shaded/hide]
+\end{frame}
+
+% Body
+\section{Author}
+\begin{frame}{Aditya Chaudhry}
+	\begin{itemize}
+		\item Publications
+			\begin{enumerate}
+				\item Uncertainty Assessment and False Discovery Rate Control in High-Dimensional Granger Causal Inference
+			\end{enumerate}
+		\item Working Papers
+			\begin{enumerate}
+				\item The Causal Impact of \alert{Macroeconomic Uncertainty} on Expected Returns
+				\item How Much Do \alert{Subjective Growth Expectations} Matter for Asset Prices?
+				\item The Impact of Prices on \alert{Analyst Cash Flow Expectations}
+			\end{enumerate}
+	\end{itemize}
+	Primary research interests:
+	\begin{itemize}
+		\item Joint dynamics of \alert{subjective beliefs}, asset demand, and asset prices.
+		\item Using \alert{new empirical strategies} to identify important structural parameters in asset pricing.
+	\end{itemize}
+\end{frame}
+\begin{frame}{Sangmin S. Oh}
+	\begin{itemize}
+		\item Job Market Paper
+			\begin{enumerate}
+				\item Social Inflation
+			\end{enumerate}
+		\item Publications
+			\begin{enumerate}
+				\item Cross-sectional Skewness
+			\end{enumerate}
+		\item Working Papers
+			\begin{enumerate}
+				\item Pricing of Climate Risk Insurance: Regulation and Cross-Subsidies
+				\item Asset Demand of U.S. Households
+				\item Unpacking the Demand for Sustainable Equity Investing
+				\item Climate Capitalists
+			\end{enumerate}
+	\end{itemize}
+	
+	\center Notebook: \href{https://sangmino.github.io/notebook}{https://sangmino.github.io/notebook}
+\end{frame}
+
+\section{Background}
+
+\begin{frame}{Motivation: shortcomings of past approaches}
+	\begin{itemize}
+		\item Investors price assets based on their \alert{beliefs} about the joint distribution of \alert{stochastic discount factor $M_{t+1}$} and the \alert{asset’s cash flows $X_{t+1}$}. 
+		$$P_{t}=\mathbb{E}_{t}\left[M_{t+1} X_{t+1}\right]$$
+		\item \alert{Expectations} play a central role in asset pricing.
+		\item One of the key drivers of investor \alert{expectations} is \alert{news of macroeconomic events}.
+		\item How to test the impact of such \alert{news}?
+			\begin{enumerate}
+				\item Examined the behavior of asset prices around announcement dates.
+					\\ \alert{Shortcomings: the diversity of information sources.}
+				\item Utilized surveys that directly measure expectations.
+					\\ \alert{Shortcomings: the low frequency of survey data.}
+			\end{enumerate}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Aim: construct a daily time series of investor expectations}
+	\begin{itemize}
+		\item Task:  recover the unobserved \alert{daily series of expectations} between two quarterly survey releases dates.
+		\item Previous papers: Kalman filtering (\alert{KF}) and a mixed frequency data sampling approach (\alert{MIDAS})
+		\item In this paper: Reinforcement learning (\alert{RL}) utilized \alert{daily asset prices} that reflect investors’ \alert{updated beliefs} about \alert{macroeconomic growth}.
+	\end{itemize}
+	\center{Why RL? Why asset prices?}
+\end{frame}
+
+\begin{frame}{Why RL? RL achieves a significant gain in efficiency.}
+	\begin{itemize}
+		\item Observed series (asset prices)
+			$y_{t+1}=H y_{t}+e_{t+1}, \quad e_{t+1} \sim \mathcal{N}(0, \Sigma)$
+		\item Latent series (macroeconomic growth expectations)
+			$x_{t+1}=F x_{t}+u_{t+1}, \quad u_{t+1} \sim \mathcal{N}(0, \Phi)$
+	\end{itemize}
+	Update rule for the estimate of x in the \alert{Kalman Filter} is
+	$$\hat{x}_{t+1 \mid t}=F\left(\hat{x}_{t \mid t-1}+\left(\frac{H \Omega_{t \mid t-1}}{\Sigma+H^{2} \Omega_{t \mid t-1}}\right)\left(y_{t}-\hat{y}_{t}\right)\right)$$
+	One must estimate the parameters $(H, F, \Sigma, \Phi)$ using ML, while \alert{RL} avoids this problem by estimating the update function directly: $\hat{x}_{t+1 \mid t}=\hat{x}_{t \mid t-1}+f\left(y_{t}\right)$.
+	\begin{itemize}
+		\item RL avoids an explicit model of the state dynamics and thus requires estimation of \alert{far fewer parameters}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Why asset prices?}
+	\begin{enumerate}
+		\item Data must be available at a \alert{daily frequency}.
+		\item Asset prices reflect many variables besides growth expectations.
+			\begin{itemize}
+				\item A single asset: cannot extract the component of asset returns driven \alert{solely} by changes in expectations of macroeconomic growth.
+				\item With multiple assets: \alert{a suitable linear combination} can cancel the extraneous sources of return variation.
+			\end{itemize}
+	\end{enumerate}
+	Task: finding an \alert{optimal combination of asset returns} that correlates maximally with the change \alert{investors' expectations of future macroeconomic growth}.
+\end{frame}
+
+\begin{frame}{Structure}
+	\begin{enumerate}
+		\item Providing empirical evidence regarding the \alert{relationship} between \alert{asset returns} and \alert{expectations of macroeconomic growth}.
+		\item Elucidate the differences among \alert{RL} algorithm, \alert{KF} and \alert{MIDAS} regression by presenting \alert{a stylized economy} with \alert{Bayesian agents}.
+		\item Take \alert{RL} algorithm into \alert{real data}.
+		\item Use \alert{RL} estimated daily series of growth expectations to test the existence of \alert{the Fed information effect}.
+	\end{enumerate}
+\end{frame}
+
+\section{Model of the economy}
+\subsection{Campbell and Shiller Approximation}
+\begin{frame}{Campbell and Shiller Approximation}
+	$$
+	\begin{aligned}
+		R_{t+1}
+		&=\small{\frac{P_{t+1}+D_{t+1}}{P_t}}
+		=\frac{\frac{P_{t+1}}{D_{t+1}}+\frac{D_{t+1}}{D_{t+1}}}{\frac{P_t}{D_t}}\cdot \frac{D_{t+1}}{D_t}
+		\\
+		\frac{P_t}{D_t}&=\frac{1}{R_{t+1}}\cdot \left( 1+\frac{P_{t+1}}{D_{t+1}} \right) \cdot \frac{D_{t+1}}{D_t}
+		\\
+		\underbrace{\ln P_t}_{p_t}-\underbrace{\ln D_t}_{d_t}&=-\ln R_{t+1}+\ln \left( 1+\frac{P_{t+1}}{D_{t+1}} \right) +\ln \frac{D_{t+1}}{D_t}
+		\\
+		p_t-d_t&=-r_{t+1}+\ln{\left( 1+e^{p_{t+1}-d_{t+1}} \right)} +\varDelta d_{t+1}
+	\end{aligned}
+	$$
+	Assume that $pd_{t}=\frac{1}{t}\sum_{n=1}^t{(p_i-d_i)}$, use Taylor expansion at $p_{t+1}-d_{t+1}=pd_{t}$, we have 
+	$$
+	\ln{\left( 1+e^{p_{t+1}-d_{t+1}} \right)}=\ln(1+e^{pd_t})+\frac{e^{pd_t}}{1+e^{pd_t}}(p_{t+1}-d_{t+1}-pd_t)
+	$$
+\end{frame}
+
+\begin{frame}{Campbell and Shiller Approximation}
+	$$
+	\begin{aligned}
+		p_t-d_t&=\left[ \ln \left( 1+e^{pd_t} \right) +\frac{e^{pd_t}}{1+e^{pd_t}}\left( p_{t+1}-d_{t+1}-pd_t \right) \right] 
+		\\&-r_{t+1}+\varDelta d_{t+1}
+		\\p_t-d_t&=-r_{t+1}+\varDelta d_{t+1}
+		\\&+\underbrace{\frac{e^{pd_t}}{1+e^{pd_t}}}_{\rho}\left( p_{t+1}-d_{t+1} \right) +
+		\underbrace{\left[ \ln \left( 1+e^{pd_t} \right) -\frac{e^{pd_t}}{1+e^{pd_t}}\cdot pd_t \right]}_{\kappa}
+		\\p_t-d_t&=-r_{t+1}+\varDelta d_{t+1}+\rho \left( p_{t+1}-d_{t+1} \right) +\kappa
+		\\p_t-d_t&=-\sum_{n=0}^{\infty}{\rho ^nr_{t+i+1}}+\sum_{n=0}^{\infty}{\rho ^n\varDelta d_{t+n+1}}+\rho ^{\infty}pd_{t+\infty}+\kappa \sum_{n=0}^{\infty}{\rho ^n}
+	\end{aligned}
+	$$
+\end{frame}
+
+\begin{frame}{Campbell and Shiller Approximation}
+	$$
+	\begin{aligned}
+		p_t-d_t&=-\sum_{n=0}^{\infty}{\rho ^ir_{t+i+1}}+\sum_{n=0}^{\infty}{\rho ^i\varDelta d_{t+n+1}}+\rho ^{\infty}pd_{t+\infty}+\kappa \sum_{n=0}^{\infty}{\rho ^i}
+		\\
+		p_t&=\kappa \sum_{n=0}^{\infty}{\rho ^i}-\sum_{n=0}^{\infty}{\rho ^ir_{t+i+1}}
+		\\&+\left[ d_t+\left( d_{t+1}-d_t \right) +\rho \left( d_{t+2}-d_{t+1} \right) +\cdots \right]
+	\end{aligned}
+	$$
+	\begin{alertblock}{Campbell and Shiller Approximation}
+		$$
+		p_t=\frac{\kappa}{1-\rho}-\sum_{n=0}^{\infty}{\rho ^n r_{t+n+1}}+\left( 1-\rho \right) \sum_{n=0}^{\infty}{\rho^n d_{t+n+1}}
+		$$
+		\center{where $\rho=\frac{e^{pd_t}}{1+e^{pd_t}}$, $\kappa=\ln \left( 1+e^{pd_t} \right) -\frac{e^{pd_t}}{1+e^{pd_t}}\cdot pd_t$}
+	\end{alertblock}
+\end{frame}
+
+\subsection{Model of the Economy}
+\begin{frame}{State-space model}
+	\begin{itemize}
+		\item GDP growth is persistent 
+			$$\theta_{t+1}  =\mu+\delta \theta_{t}+\epsilon_{t+1}, \quad \epsilon_{t+1} \sim N\left(0, \sigma_{\epsilon}^{2}\right)$$
+		\item GDP growth affects each asset’s dividend growth
+			$$d_{t+1}^{i}-d_{t}^{i}  =\gamma+\beta^{i} \theta_{t+1}+\nu_{t+1}^{i}, \quad \nu_{t+1}^{i} \sim N\left(0, \sigma_{\nu}^{2}\right)$$
+		\item The conditional expected return of asset $i$ depends linearly on another latent factor $\zeta_{t}$
+			$$\mathbb{E}_{t}\left[r_{t+1}^{i}\right]  =\alpha+\phi^{i} \zeta_{t}$$
+		\item Latent factor $\zeta_{t}$ is persistent
+			$$\zeta_{t+1}  =\tau+\psi \zeta_{t}+\xi_{t+1}, \quad \xi_{t+1} \sim N\left(0, \sigma_{\xi}^{2}\right)$$
+		\item Innovations to $\theta_t$ and $\zeta_t$ are correlated:  $\operatorname{Corr}\left(\epsilon_{t}, \zeta_t\right)=\pi$
+	\end{itemize}
+\end{frame}
+\begin{frame}{Solve the state-space model}
+	\begin{alertblock}{Campbell and Shiller Approximation}
+	$$
+	p_{t}^{i} =\frac{\kappa}{1-\rho}+(1-\rho) \sum_{j=0}^{\infty} \rho^{j} \mathbb{E}_{t}\left[d_{t+j+1}^{i}\right]-\sum_{j=0}^{\infty} \rho^{j} \mathbb{E}_{t}\left[r_{t+j+1}^{i}\right]
+	$$
+	\end{alertblock}
+	$$
+	\begin{array}{c}
+		\begin{cases}
+			\theta_{t+1}  =\mu+\delta \theta_{t}+\epsilon_{t+1}
+			\\
+			d_{t+1}^{i}-d_{t}^{i}  =\gamma+\beta^{i} \theta_{t+1}+\nu_{t+1}^{i}
+		\end{cases}
+		\\
+		\Downarrow
+		\\
+		\mathbb{E}_{t}\left[d_{t+j+1}^{i}\right]=d_{t}^{i}+\sum_{n=0}^{j}{\left[\gamma+\beta^{i} \mu\left(\frac{1-\delta^{n+1}}{1-\delta}\right)+\beta^{i} \delta^{n+1} \theta_{t}\right]}
+	\end{array}
+	$$
+	$$\mathbb{E}_{t}\left[r_{t+1}^{i}\right]  =\alpha+\phi^{i} \zeta_{t} \Rightarrow \mathbb{E}_{t}\left[r_{t+j+1}^{i}\right]=\left\{\begin{array}{ll}\alpha+\phi^{i} \tau \frac{1-\psi^{j}}{1-\psi}+\phi^{i} \psi^{j} \zeta_{t} & j>1 \\ \alpha+\phi^{i} \zeta_{t} & j=1\end{array}\right.$$
+\end{frame}
+\begin{frame}{Model result}
+	\begin{alertblock}{Simple function of return $r^{i}_{t+1}$}
+		$$
+		\begin{aligned}
+			r_{t+1}^{i}&=\left[\left(\beta^{i}+\frac{\delta \beta^{i}}{1-\rho \delta}\right) \theta_{t+1}-\left(\frac{\delta \beta^{i}}{1-\rho \delta}\right) \theta_{t}\right]
+		\\&-\frac{\phi^{i}}{1-\rho \psi}\left(\zeta_{t+1}-\zeta_{t}\right)+\nu_{t+1}+\gamma
+		\end{aligned}
+		$$
+	\end{alertblock}
+%	\\ \ \\
+	\begin{columns}
+		\column{0.59\textwidth}
+			Returns increase with 
+			\begin{itemize}
+				\item contemporaneous growth $\theta_{t+1}$
+				\item shock to the dividend process
+			\end{itemize}
+			and decrease with
+			\begin{itemize}
+				\item previous period's growth $\theta_t$
+				\item change in $\zeta_{t+1}$
+			\end{itemize}
+		\column{0.45\textwidth}
+		\alert{Asset prices}
+		\\ should be useful to 
+		\\ understand changes in 
+		\\ \alert{investor expectations}
+			\\ (GDP growth expectation)
+	\end{columns}
+\end{frame}
+
+\section{Empirical framework}
+\subsection{Estimate the cross-sectional moments of growth forecasts}
+\begin{frame}{Asset Prices $\rightarrow$ Growth Expectations}
+	Examine whether \alert{asset returns} \\ can explain \alert{innovations in the average growth forecast}.
+	\begin{enumerate}
+		\item Forecast innovation: the difference between the \alert{nowcast} and the \alert{lag-one-period forecast} for period $t$.
+		\item Run time-series regressions of \alert{innovations in mean growth expectations} on \alert{asset returns} (bivariate pairs of assets).
+		\item The CRSP U.S. Treasury five-year fixed-term index and the CRSP value-weighted portfolio ($R^2=38.3\%$).
+	\end{enumerate}
+	Thus, \alert{asset returns} contain useful information about \alert{forecast innovations} empirically.
+\end{frame}
+\begin{frame}{Incorporating Bayesian Agents}
+	Instantiate 20 \alert{Bayesian agents} who observe realized returns and form expectations of the latent growth process (cannot observe growth).
+	\begin{itemize}
+		\item \alert{prior-mean heterogeneity}: the mean of each agent’s \alert{prior belief} regarding $\theta_t\sim N(\theta_0, 0.5\theta_0)$ at the start of the quarter.
+		\item \alert{learning heterogeneity}: each agents draws his value of the parameters from a normal distribution centered at the baseline parameter value with variance parameterized by a fixed signal-to-noise ratio (\alert{different parameters in state and observation equation}).
+	\end{itemize}
+\end{frame}
+\begin{frame}{Learning the Cross-sectional Moments}
+	The expression for the optimal Kalman gain implies the following relationship:
+	$$\underbrace{\mu_{i, t}}_{\mathbb{E}_{t}^{i}\left[\theta_{t+1}\right]}=c_{0, t}^{i}+c_{1, t}^{i} \mu_{i, t-1}+\left(\mathbf{c}_{2, t}^{i}\right)^{\prime} \mathbf{r}_{t}$$
+	Averaging across all agents, we get the cross-sectional mean of growth expectations at period $t$:
+	$$
+	\mu_{t} \equiv \frac{1}{N} \sum_{i=1}^{N} \mu_{i, t}=\frac{1}{N} \sum_{i=1}^{N} c_{0, t}^{i}+\frac{1}{N} \sum_{i=1}^{N} c_{1, t}^{i} \mu_{i, t-1}+\left(\frac{1}{N} \sum_{i=1}^{N} \mathbf{c}_{2, t}^{i}\right)^{\prime} \mathbf{r}_{t}
+	$$
+	Use the following approximating moment:
+	$$
+	\begin{aligned}
+		\mu_{t}&=c_{0}+c_{1} \mu_{t-1}+\mathbf{c}_{2}^{\prime} \mathbf{r}_{t} \approx c_{1} \mu_{t-1}+\mathbf{c}_{2}^{\prime} \mathbf{r}_{t}
+		\\
+		& =c_{1} \mu_{t-1}+\mathbf{c}_{2}^{\prime}\left[\mathbf{1} \gamma+\mathbf{a} \theta_{t}+\mathbf{b} \theta_{t-1}+\mathbf{c}\left(\zeta_{t}-\zeta_{t-1}\right)+\boldsymbol{\nu}_{t}\right]
+	\end{aligned}
+	$$
+\end{frame}
+
+\subsection{Three Approaches to Estimation: KF, RL, and MIDAS}
+\begin{frame}{The Kalman Filtering (KF) Approach}
+	State equation:
+	$$
+	\begin{aligned} \theta_{t+1} & =\mu+\delta \theta_{t}+\epsilon_{t+1} \\ \zeta_{t+1} & =\tau+\psi \zeta_{t}+\xi_{t+1} \\ \mu_{t+1} & =\mathbf{c}_{2}^{\prime}(\mathbf{1} \gamma+\mathbf{a} \mu+\mathbf{c} \tau)+\mathbf{c}_{2}^{\prime}(\mathbf{a} \delta+\mathbf{b}) \theta_{t}+\mathbf{c}_{2}^{\prime} \mathbf{c}(\psi-1) \zeta_{t}+c_{1} \mu_{t}\end{aligned}
+	$$
+	\\ \ \\
+	Observation equation:
+	$$
+	\mathbf{c}_{2}^{\prime} \mathbf{r}_{t}=\mu_{t}-c_{1} \mu_{t-1}
+	$$
+	\begin{itemize}
+		\item $3m + 11$ parameters to be estimated. \\ ($m$ is the number of assets used)
+	\end{itemize}
+\end{frame}
+\begin{frame}{The Mixed Data Sampling (MIDAS) Approach}
+	$$y_{t}=\alpha^{\tau}+\rho^{\tau} y_{t-1}+\sum_{i=1}^{m} {\beta_{i}^{\tau} \underbrace{\gamma^{\tau}(L) r_{\tau}^{i}}_{\sum_{d=\tau-l+1}^{\tau}{\gamma_{d}^{\tau} r_{d}^{i}}}}+\epsilon_{t}$$
+	\begin{itemize}
+		\item Use a maximal lag of $l = 90$ days.
+		\item $y_t$ is $\mu_t$, the quarterly observed cross-sectional mean survey expectation.
+		\item Each MIDAS regression involves estimating $m+4$ parameters.
+	\end{itemize}
+	
+\end{frame}
+\begin{frame}{The Reinforcement Learning (RL) Approach}
+	\begin{itemize}
+		\item agent's state = current expectation + asset returns
+			$$
+			\varphi\left(s_{t}\right)=\left(\begin{array}{c}\hat{\mu}_{t-1} \\ \hat{\sigma}_{t-1}^{2} \\ \mathbf{r}_{t}^{\prime}\end{array}\right) \in \mathbb{R}^{m+2}, \quad 
+			\varphi\left(s_{1}\right)=\left(\begin{array}{c}\mu_{0} \\ \sigma_{0}^{2} \\ \mathbf{r}_{1}^{\prime}\end{array}\right)
+			$$
+		\item policy: function of the current state that yields the agent's new growth expectation.
+			$$
+			g_{\boldsymbol{\lambda}}\left(s_{t}\right) \equiv\left(\begin{array}{c}\mu_{t} \\ \sigma_{t}\end{array}\right)=\left(\begin{array}{c}c_{1} \mu_{t-1}+\mathbf{c}_{2}^{\prime} \mathbf{r}_{t} \\ \sqrt{c_{3} \sigma_{t-1}^{2}+\mathbf{c}_{4}^{\prime} \mathbf{r}_{t} \mathbf{r}_{t}^{\prime} \mathbf{c}_{4}+\mathbf{c}_{5}^{\prime} \mathbf{r}_{t} \mu_{t-1}}\end{array}\right) \in \mathbb{R}^{2}
+			$$
+		\item action: agent's updated growth expectation.
+		\item rewards:
+			$$r_{t}\left(s^{t}\right)=\left\{\begin{array}{ll}0 & \text { if } t<T \\ -\left\|\left(\begin{array}{c}\hat{\mu}_{T \mid T-1} \\ \hat{\sigma}_{T \mid T-1}\end{array}\right)-\left(\begin{array}{c}\mu_{T} \\ \sigma_{T}\end{array}\right)\right\| & \text { if } t=T\end{array}\right.$$
+	\end{itemize}
+\end{frame}
+\begin{frame}{A Three-Way Comparison}
+	\begin{itemize}
+		\item The interpretation of the output of each method.
+			\begin{itemize}
+				\item RL and KF approaches yield daily estimates of the current latent cross-sectional mean expectation. $(\mathbb{E}\left[\mu_{t} \mid \mathcal{F}_{t}^{E}\right])$
+				\item MIDAS produces a prediction of the end-of-quarter cross-sectional mean expectation.$(\mathbb{E}\left[\mu_{T} \mid \mathcal{F}_{t}^{E}\right])$
+				\item RL and KF approaches prove better suited to our setting than the MIDAS approach.
+			\end{itemize}
+		\item The bias-variance tradeoff each method incurs.
+			\begin{itemize}
+				\item parameters\\
+					KF: $3m+11$, RL: $m+1$, MIDAS: $60(m+4)$
+				\item RL approach proves far more efficient than the other two methods.
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+\subsection{Empirical Performance of RL}
+\begin{frame}{Performance of RL}
+	Policy function:
+	$$
+	g_{\boldsymbol{\lambda}}\left(s_{t}\right) \equiv\left(\begin{array}{c}\mu_{t} \\ \sigma_{t}\end{array}\right)=\left(\begin{array}{c}c_{1} \mu_{t-1}+\mathbf{c}_{2}^{\prime} \mathbf{r}_{t} \\ \sqrt{c_{3} \sigma_{t-1}^{2}+\mathbf{c}_{4}^{\prime} \mathbf{r}_{t} \mathbf{r}_{t}^{\prime} \mathbf{c}_{4}+\mathbf{c}_{5}^{\prime} \mathbf{r}_{t} \mu_{t-1}}\end{array}\right) \in \mathbb{R}^{2}
+	$$
+	\begin{table}
+	    \centering
+	    \caption{Recursive Out-of-Sample Estimation Results}
+	    \vspace{-0.5cm}
+	    \setlength{\tabcolsep}{4mm}
+		    {
+		    \begin{tabular}{lcccc}
+		    \toprule
+	         & RL Approach & Naive & MIDAS & KF \\ \midrule
+	        RMSE & 0.449 & 0.588 & 0.916 & 39.103 \\ 
+	        $R^2$ & 0.823 & 0.647 & 0.392 & 0.0237 \\ \bottomrule
+		    \end{tabular}
+		    }
+%	    \label{fig1}
+	\end{table}
+\end{frame}
+\begin{frame}{Origins of RL’s Outperformance}
+	Core difficulty: obtaining a daily law of motion for expectations given quarterly training data.
+	\begin{itemize}
+		\item RL vs. KF
+			\begin{itemize}
+				\item KF: imposing parametric assumptions and using ML.
+				\item RL: directly estimating the Kalman gain using a linear learning rule (\alert{bias-efficiency trade-off}).
+			\end{itemize}
+		\item RL vs. MIDAS
+			\begin{itemize}
+				\item MIDAS: applies a non-monotonic weighting scheme to 90 days of lagged asset returns.
+				\item RL: uses only asset returns since the start of the last survey release, weighting them uniformly (\alert{treatment of lagged asset returns proves more useful}).
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Hyper-parameters: step size and noise in behavioral policy}
+	\begin{itemize}
+		\item step size: 
+			\\ too small $\rightarrow$ one may get stuck in a local maximum
+			\\ too large $\rightarrow$ algorithm may have trouble converging
+		\item noise in the behavioral policy: 
+			\\ too little exploration $\rightarrow$ a suboptimal policy
+			\\ too much exploration $\rightarrow$ prevent the algorithm from making proper gradient updates to the weights
+	\end{itemize}
+	A proper hyper-parameter optimization procedure
+	\begin{enumerate}
+		\item Divide the sample into a \alert{training subsample} and a \alert{pseudo-testing subsample}.
+		\item Train a model at each grid point on the training subsample and test on the pseudo-testing subsample.
+		\item Choose the set of hyper-parameters that performs best in the pseudo-testing subsample.
+	\end{enumerate}
+\end{frame}
+\subsection{Testing the "Fed Information Effect"}
+\begin{frame}{Testing the "Fed Information Effect"}
+	Fed Information Effect:\\ \alert{Hawkish surprises} for interest rates correspond to \alert{increases} in real GDP growth expectations.
+	$$
+	\mathbb{E}_{t+15}\left[g_{Q}\right]-\mathbb{E}_{t-15}\left[g_{Q}\right]=\beta_{0}+\underbrace{\beta_{1}}_{positive} \text{Shock}_{t}+\epsilon_{t}
+	$$
+	An omitted variable: \\
+	\alert{economic news} released between day $t-15$ and day $t-1$
+	$$
+	\Delta CX\ Mean _{t}=\beta_{0}+\underbrace{\beta_{1}}_{negative} \text{Shock}_{t}+\epsilon_{t}
+	$$
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}{Attribution}
+	\begin{itemize}
+		\item The first serious application of \alert{reinforcement learning} in the growing literature that uses machine learning methods in finance.
+		\item Present \alert{reinforcement learning} as a more efficient improvement over \alert{traditional filtering} methods.
+		\item Obtain a \alert{daily series of expectations} for any macroeconomic variable with a \alert{low-frequency} panel of forecasts.
+	\end{itemize}
+\end{frame}
+\begin{frame}{How to apply "Machine Learning Approach" in finance?}
+	\begin{itemize}
+		\item Compare to traditional methods.
+		\item A model of the economy.
+		\item Economic intuition.
+		\item Use the result to test something.
+	\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% End
+\begin{frame}[allowframebreaks]%{End}
+	\begin{center}
+		\Huge\textbf{\textit{\texttt{Thanks!}}}
+	\end{center}
+\end{frame}
+
+% Reference
+%\appendix
+%\begin{frame}{Reference}
+%	\addtocounter{framenumber}{-1}
+%	\printbibliography % [heading=bibintoc, title=Reference]
+%\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Snippets
+%\begin{frame}[noframenumbering, plain]{Snippets}
+%	\begin{multicols}{2}
+%		\begin{enumerate}
+%			\item \cite[Page10]{barro1990}
+%			\item parencite \\ \parencite{Greiner2008}
+%			\item footcite \footcite{green2020}
+%			\item \cite{Greiner2008}
+%		\end{enumerate}
+%		\begin{itemize}
+%			\item \[V = \frac{4}{3}\pi r^3\]
+%			\item $ V = \frac{4}{3}\pi r^3 $
+%		\end{itemize}
+%	\end{multicols}	
+%	\begin{equation}
+%		\label{eq1}
+%		V = \frac{4}{3}\pi r^3
+%	\end{equation}
+%	\center 
+%	As Equation(\ref{eq1}) shows, $\cdots$, this \emph{equation} is \alert{important}.
+%\end{frame}
+%
+%\begin{frame}[noframenumbering, plain]{Snippets}
+%	\begin{columns}
+%		\column{0.5\textwidth}
+%			\begin{block}{Remark}
+%				Sample text
+%			\end{block}
+%			\begin{alertblock}{Important theorem}
+%				Sample text in red box
+%			\end{alertblock}
+%			\begin{examples}
+%				Sample text in green box. 
+%			\end{examples}
+%		\column{0.5\textwidth}
+%			\begin{table}
+%			    \centering
+%			    \caption{table1}
+%			    \vspace{-0.5cm}
+%			    \setlength{\tabcolsep}{5mm}
+%				    {
+%				    \begin{tabular}{lcc}
+%				    \hline
+%			        123 & 123 & ad f \\ \hline
+%			        \textcolor{deepred}{123} & w & ad f \\ 
+%			        \textcolor{sufered}{123} & \alert{ad} f & ad s f \\ \hline
+%				    \end{tabular}
+%				    }
+%			    \label{fig1}
+%			\end{table}
+%	\end{columns}
+%\end{frame}
+%\backupend
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{CJK*}
+\end{document}
