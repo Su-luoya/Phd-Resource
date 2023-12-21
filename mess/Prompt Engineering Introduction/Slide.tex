@@ -1,0 +1,451 @@
+\documentclass[UTF8, 16pt]{beamer}
+ 
+% Chinese
+\usepackage{CJKutf8}
+
+% Font
+\usepackage{bookman}
+\usefonttheme{serif}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgbonum}
+
+% Other packages
+\usepackage{hyperref, appendixnumberbeamer}
+\usepackage{latexsym, amsmath, xcolor, multicol, booktabs}
+\usepackage{graphicx, listings, stackengine}
+
+% SUFE.sty
+\usepackage{SUFE} 
+% Bibtex
+\usepackage[citestyle=authoryear-comp, 
+			backend=bibtex, 
+			bibstyle=numeric, 
+%			sorting=ynt
+			]{biblatex}
+\setbeamertemplate{bibliography item}[text]
+\addbibresource{ref.bib}
+
+% Other setting
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Title page
+%% Author
+\author[Haotian Deng] % The short name
+{
+Haotian Deng
+%邓皓天
+%\inst{1}
+%\and
+%Yuting Liu 
+%\inst{2}
+} 
+%% Title & Subtitle
+\title[How to collaborate with ChatGPT? From a ``Prompt Engineering" Perspective]{How to collaborate with ChatGPT?}
+\subtitle{From a ``Prompt Engineering" Perspective}
+%% Institution
+\institute[SUFE]
+{
+%\inst{1}
+Shanghai University of Finance and Economics
+%上海财经大学金融学院
+%\and
+%\inst{2}
+%Shanghai University of Finance and Economics
+}
+%% Date
+\date[VLC 2021]
+{December 19, 2023}
+%%Logo
+%\logo{\includegraphics[height=1cm]{sufe_logo}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Document begins
+\begin{document}
+\begin{CJK*}{UTF8}{gbsn}
+
+%Title page
+\begin{frame}[noframenumbering]
+%	\thispagestyle{empty}
+	\titlepage
+	% Logo
+	\vspace{-0.5cm}
+    \begin{figure}[htpb] 
+        \begin{center}
+            \includegraphics[width=0.19 \linewidth]{sufe_logo.png}
+        \end{center}  
+    \end{figure}
+\end{frame}
+
+% Contents page
+\begin{frame}{Contents}
+	\tableofcontents[sectionstyle=show,
+ 	subsectionstyle=show/shaded/hide,
+ 	subsubsectionstyle=show/shaded/hide]
+\end{frame}
+
+% Body
+\section{Target and Structure}
+\begin{frame}{Target}
+	For you
+	\begin{enumerate}
+		\item Experience \alert{GPT4}.
+		\item Get to know sth about \alert{``Prompt Engineering"}.
+		\item Still keep sth in mind \alert{even after a long time}.
+	\end{enumerate}
+	For me
+	\begin{enumerate}
+		\item Satisfy my desire to \alert{share}.
+		\item Practice my \alert{presentation skills}.
+	\end{enumerate}
+	For us
+	\begin{enumerate}
+		\item Establish a communication \alert{platform}.
+		\item Dog rich and noble, don't forget wang.
+	\end{enumerate}
+\end{frame}
+\begin{frame}{Structure}
+	\begin{enumerate}
+		\item From Zero to One 
+			\\
+			Necessary Requirements:
+			\\
+			\alert{VPN} + Correct Setup + (A little bit of money)
+		\item From One to N
+			\\
+			Cost: \alert{Prompt Engineering} + (A little bit of time)
+		\item From N to N+1
+			\\
+			\alert{Four Realms} of thinking + A \alert{tradeoff} way of thinking
+	\end{enumerate}
+\end{frame}
+
+\section{Preparation}
+\begin{frame}{VPN}
+	\begin{itemize}
+		\item VPN Recommendation: \href{https://ikuuu.me}{https://ikuuu.me}
+			\begin{itemize}
+				\item \alert{Multi-Device} Support.
+					\\ (Windows, MacOS, iPadOS, iOS, Android, Linux)
+				\item 300 GB per month.
+				\item Supports up to 5 devices online simultaneously. 
+				\item \alert{Stable and Cheap} (108 yuan per year).
+				\item Do not spread, use it discreetly.
+			\end{itemize}
+%		\\ \
+		\item Node Selection: \alert{Japan}
+			\begin{itemize}
+				\item Why Japan? Why not HongKong or US?
+				\item Do not switch nodes randomly!
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Five ways to experience LLM (GPT4)}
+	Why ``GPT4"?
+	\begin{itemize}
+		\item So far, the best and the widely used.
+		\item Far ahead in the short term.
+	\end{itemize}
+	Five ways:
+	\begin{enumerate}
+		\item New Bing (Any browsers including Google and Safari)
+		\item Copilot (Windows, Edge or VS Code Extension)
+		\item \alert{ChatGPT} (\href{https://chat.openai.com/}{https://chat.openai.com}) 
+		\item OpenAI API (\href{https://platform.openai.com/api-keys}{https://platform.openai.com/api-keys})
+			\\ (More affordable, with better expandability.)
+			\begin{itemize}
+				\item Call API in Python (even in Stata).
+			\item Translate Plugins such as \href{https://bobtranslate.com}{Bob} and \href{https://getquicker.net/}{Quicker}
+				\item Zotero or \href{https://github.com/binary-husky/gpt_academic}{GPT Academic}
+			\end{itemize}
+		\item Third-party platform such as \href{https://poe.com}{Poe}.
+	\end{enumerate}
+\end{frame}
+
+\section{Prompt Engineering}
+\begin{frame}{Why do we need Prompt Engineering ?}
+	\center{All ``prompts'' are wrong, but some are useful.}
+	\\ \ \\
+	\begin{itemize}
+		\item Key Assumption:
+			\begin{enumerate}
+				\item The model is \alert{``always"} right and capable. 
+					\\ 
+					(Why? Think about Goldbach's Conjecture.)
+				\item If the results are bad and unsatisfying.
+				\item You are stupid in writing prompts.
+				\item Rewrite your prompt!
+			\end{enumerate}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Why do we need Prompt Engineering ?}
+	\begin{itemize}
+		\item An \alert{optimization} problem with \alert{constraint} conditions.
+			\begin{itemize}
+				\item \alert{Target}: Get satisfying outputs.
+				\item \alert{Constraint}: We don't want wasting too much time.
+				\item Solution: Analytical or \alert{Local Optimal Solution}?
+				\item How to solve?
+					\\ 
+					\alert{Iteration} (Think about the Gradient Descent Method)
+				\item Key: the \alert{bias-variance tradeoff}.
+			\end{itemize}
+		\item A kind of \alert{prior knowledge}.
+			\begin{itemize}
+				\item \alert{Limit-focused thinking}.
+					\\
+					Question: If 1+1=2, can you tell me 1+1= ?
+					\\
+					Answer: Yes, 1+1=2.
+				\item An \alert{example} of librarian and farmer.
+					\\
+					There is a guy named Steve, a meek and tidy soul. Which do you think is more likely, a librarian or a farmer?
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Basic Concepts}
+	\begin{itemize}
+		\item Parameters Configuration: \alert{Temperature} (New Bing)
+		\item Prompt Elements (what prompts should contain):
+			\begin{itemize}
+				\item \alert{Instruction}: optimization problem
+				\item \alert{Context}: prior knowledge
+				\item \alert{Input data}: ``$X$'' (user's question)
+				\item \alert{Output Formate}: type and format of ``$y$"
+			\end{itemize}
+		\item Prompt Classification
+			\begin{itemize}
+				\item Zero-shot prompt
+				\item \alert{Few-shot prompt}
+				\item \alert{Role prompt}
+				\item \alert{Instruction prompt}
+				\item \alert{Chain-of-thought prompt} (Let's think step by step)            
+				\item Multimodal prompt (not recommended)
+			\end{itemize}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Five strategies for getting better results}
+	\begin{enumerate}
+		\item \alert{Few-shot prompts} are likely better.
+			\begin{itemize}
+				\item Provide additional knowledge.
+				\item Majority label bias.
+				\item Recency bias.
+				\item Common token bias.
+			\end{itemize}
+		\item Give your model a certain \alert{role}.
+			\begin{itemize}
+				\item A professional researcher in the fields of ...
+				\item An experienced reviewer for top-tier financial journals
+			\end{itemize}
+		\item Let the model think step by step (\alert{COT}).
+			\begin{itemize}
+				\item Provide real-time feedback.
+				\item Use clear step-by-step instructions and line breaks.
+			\end{itemize}
+		\item \alert{Clear and specific} prompts.
+			\begin{itemize}
+				\item LaTeX or Markdown for math equation.
+				\item List in points. / Output in a table.
+				\item ..., otherwise you should print ``nothing".
+			\end{itemize}
+		\item Chinese or English? \alert{accuracy-adaptability tradeoff}
+			(GPT4 is a foreigner proficient in Chinese) (Give tips)
+	\end{enumerate}
+\end{frame}
+\begin{frame}{Prompt Tuning}
+	\begin{itemize}
+		\item \alert{Character}: You are a powerful AI prompt engineer. You excel at creating and optimizing AI prompts based on user needs.
+		\item \alert{Skill 1}: Identify the purpose of the original prompt. Understand the functionality or application scenario that users want to achieve through the prompts they provide.
+		\item \alert{Skill 2}: Optimize the prompt
+			\begin{enumerate}
+				\item Follow the user's instructions (if any) to optimize their prompts.
+				\item Based on the user's instructions, take steps such as editing words, adjusting sentence order, adding or reducing details, etc.
+				\item If the user hasn't provided specific instructions, check for clear directives, complete sentences, etc.
+			\end{enumerate}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Prompt Tuning}
+	\begin{itemize}
+		\item \alert{Skill 3}: Return the optimized prompt. After optimizing, the results should be returned to the user. Avoid adding any words or sentences that may make the prompt ambiguous.
+		\item \alert{Constraints}
+			\begin{enumerate}
+				\item Only respond to questions related to Creating or optimizing prompts.
+				\item Avoid using technical terms that might confuse the user. Always strive to create prompts in a language that the user can understand.
+				\item If the user's original prompt contains inappropriate or incorrect content, it is your responsibility to point it out and offer correct suggestions.
+				\item The provided prompt words must include character settings, skills and constraints, and must always be in markdown format.
+			\end{enumerate}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Rules, Tools and Community}
+	\begin{itemize}
+		\item \alert{Rename} your ``Chat" and \alert{delete} if not needed.
+		\item Create and share your personal \alert{``GPTs"}.
+		\item ChatGPT \alert{Plugins}.
+			\begin{enumerate}
+				\item Consensus
+				\item Advanced Data Analysis
+				\item AskYourPdf
+				\item WebPilot
+			\end{enumerate}
+		\item Custom Instructions.
+	\end{itemize}
+	\center
+	Let's construct our own open source  GPT Community!
+	\\ \ \\
+	\href{https://www.wolai.com/suluoya/bUwNxhaPmVaHFPA54Vf2K}{https://www.wolai.com/suluoya/bUwNxhaPmVaHFPA54Vf2K}
+\end{frame}
+
+\section{Applications: Research Assistant}
+\begin{frame}{Let GPT be a research assistant}
+	\begin{enumerate}
+		\item Paper Helper.
+		\item Coding Assistant.
+		\item Data Analysis.
+		\item Translation Expert.
+		\item ... (The importance to construct our community.)
+	\end{enumerate}
+\end{frame}
+\begin{frame}{Review}
+	\begin{enumerate}
+		\item \alert{Context}: I am ..., currently doing ...
+		\item \alert{Role}: As a team, you simultaneously play the following roles.
+		\item \alert{Instruction}: Answer the following questions in Chinese.
+		\item \alert{Restrict}: I need you to follow a few rules when answer the above questions.
+	\end{enumerate}
+\end{frame}
+\begin{frame}{Example: Make a presentation (Context and Role)}
+	\begin{itemize}
+		\item \alert{Context}: I am a PhD student in finance, currently conducting research in areas such as "Asset Pricing", "Factor Investing", "Empirical Analysis" and "Machine Learning". I need to prepare a slide to present a paper I recently read to my supervisor and partners.
+		\item \alert{Role}: You are a professional researcher and an experienced reviewer for top-tier financial journals in the fields of "Asset Pricing", "Factor Investing", "Empirical Analysis" and "Machine Learning". You are good at summarizing academic papers using simple and concise statements and translating English into Chinese authentically and accurately.
+	\end{itemize}
+\end{frame}
+\begin{frame}{Example: Make a presentation (Construction)}
+	\begin{itemize}
+		\item \alert{Construction}: I need your help to read the document (which is an English academic paper) and answer the following questions in Chinese.
+			\begin{enumerate}
+				\item What is the research background and motivation?
+				\item What is the main focus of the literature review? 
+				\item What is the contribution or the highlight?
+				\item What is the research methodology?
+				\item What are the main results? Please list in points.
+				\item What is the structure? Please list in points. Why did the author structure this way?
+				\item Are there any shortcomings or controversial aspects?
+				\item If we want to continue this research, what should future work focus on? Please list in points.
+				\item As a paper reviewer, do you think the logic, structure, methodology, data, and results of this article are reasonable? Why? Can you give some advice?
+			\end{enumerate}
+	\end{itemize}
+\end{frame}
+\begin{frame}{Example: Make a presentation (Restrict)}
+	\begin{itemize}
+		\item \alert{Restrict}: In addition, I need you to follow a few rules.
+			\begin{enumerate}
+				\item When translating, pay attention to professional terminology. Some important proper nouns and abbreviations need to be marked in English. If you encounter English names, please keep them in English, too.
+				\item Do not fabricate answers, and please provide a reminder if the information is out of date or not in this paper. Never generate fake information or search through the Internet without telling me.
+				\item Try to minimize repetitive and redundant output.
+				\item If the answer containing mathematical formulas and symbols, use Latex to generate them.
+				\item I need you to adjust the output format on your own to make it look neater and more comfortable. 
+				\item Please think quietly before answer.
+			\end{enumerate}
+	\end{itemize}
+\end{frame}
+
+\section{Prompt Artist}
+\begin{frame}{Four Realms}
+	\begin{enumerate}
+		\item Unaware of one's own ignorance.
+		\item Aware of one's own ignorance.
+		\item Aware of one's own knowledge.
+		\item Unaware of one's own knowledge.
+	\end{enumerate}
+\end{frame}
+\begin{frame}{Prompt Engineer? Prompt Artist.}
+	\begin{itemize}
+		\item The bias-variance tradeoff.
+		\item The accuracy-adaptability tradeoff.
+		\item The convenience-efficiency tradeoff.
+	\end{itemize}
+\end{frame}
+
+\section{Discussion}
+\begin{frame}{Discussion}
+	\begin{center}
+		\Huge\textbf{\textit{\texttt{Discussion}}}
+	\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% End
+\begin{frame}[allowframebreaks]%{End}
+	\begin{center}
+		\Huge\textbf{\textit{\texttt{Thanks!}}}
+	\end{center}
+\end{frame}
+
+% Reference
+%\appendix
+%\begin{frame}{Reference}
+%	\addtocounter{framenumber}{-1}
+%	\printbibliography % [heading=bibintoc, title=Reference]
+%\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Snippets
+%\begin{frame}[noframenumbering, plain]{Snippets}
+%	\begin{multicols}{2}
+%		\begin{enumerate}
+%			\item \cite[Page10]{barro1990}
+%			\item parencite \\ \parencite{Greiner2008}
+%			\item footcite \footcite{green2020}
+%			\item \cite{Greiner2008}
+%		\end{enumerate}
+%		\begin{itemize}
+%			\item \[V = \frac{4}{3}\pi r^3\]
+%			\item $ V = \frac{4}{3}\pi r^3 $
+%		\end{itemize}
+%	\end{multicols}	
+%	\begin{equation}
+%		\label{eq1}
+%		V = \frac{4}{3}\pi r^3
+%	\end{equation}
+%	\center 
+%	As Equation(\ref{eq1}) shows, $\cdots$, this \emph{equation} is \alert{important}.
+%\end{frame}
+%
+%\begin{frame}[noframenumbering, plain]{Snippets}
+%	\begin{columns}
+%		\column{0.5\textwidth}
+%			\begin{block}{Remark}
+%				Sample text
+%			\end{block}
+%			\begin{alertblock}{Important theorem}
+%				Sample text in red box
+%			\end{alertblock}
+%			\begin{examples}
+%				Sample text in green box. 
+%			\end{examples}
+%		\column{0.5\textwidth}
+%			\begin{table}
+%			    \centering
+%			    \caption{table1}
+%			    \vspace{-0.5cm}
+%			    \setlength{\tabcolsep}{5mm}
+%				    {
+%				    \begin{tabular}{lcc}
+%				    \hline
+%			        123 & 123 & ad f \\ \hline
+%			        \textcolor{deepred}{123} & w & ad f \\ 
+%			        \textcolor{sufered}{123} & \alert{ad} f & ad s f \\ \hline
+%				    \end{tabular}
+%				    }
+%			    \label{fig1}
+%			\end{table}
+%	\end{columns}
+%\end{frame}
+%\backupend
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{CJK*}
+\end{document}
