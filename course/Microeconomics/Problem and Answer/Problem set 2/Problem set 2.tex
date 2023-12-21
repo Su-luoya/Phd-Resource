@@ -1,0 +1,302 @@
+\documentclass[12pt, english]{article}
+\usepackage{enumerate}
+\usepackage[charter]{mathdesign}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage[authoryear]{natbib}
+\usepackage[all]{xy}
+\onehalfspacing
+\usepackage[unicode=true, pdfusetitle,
+ bookmarks=true, bookmarksnumbered=false, bookmarksopen=false,
+ breaklinks=false, pdfborder={0 0 1}, backref=false, colorlinks=true]
+ {hyperref}
+\hypersetup{
+ citecolor={darkblue}, urlcolor={darkblue}, linkcolor={darkblue}}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\noun}[1]{\textsc{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\date{}
+\bibpunct{(}{)}{,}{a}{,}{,} 
+\usepackage{hyperref}
+\let\ref\autoref
+\usepackage{xcolor}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\usepackage[all]{xy}
+\makeatletter
+\newcommand{\xyC}[1]{%
+\makeatletter
+\xydef@\xymatrixcolsep@{#1}
+\makeatother
+} % end of \xyC
+\makeatletter
+\newcommand{\xyR}[1]{%
+\makeatletter
+\xydef@\xymatrixrowsep@{#1}
+\makeatother
+} % end of \xyR
+
+
+\makeatother
+
+\newcounter{problemname}
+\newcounter{answername}
+\newenvironment{problem}{\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.}}{\\\par}
+\newenvironment{answer}{\stepcounter{answername}\par\noindent\textbf{Answer to Problem \arabic{answername}.\newline}}{\\\par\bigskip}
+
+%\linespread{1.6}
+
+\title{\vspace{-3.3cm}\textbf{Problem Set 2}}
+\author{Haotian Deng\\ (SUFE, Student ID: 2023310114)}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+	Consider a more general choice-based approach to demand: assume that there exists a choice correspondence $x(p, w)$ defined on $\left\{B_{p, w}: p\gg 0, w>0\right\}$. Assume that $x(p, w)$ satisfies the weak axiom of revealed preference and Walras' law. Show the following generalized compensated law of demand: for any $p\gg 0, w>0$ and $p'\gg 0$, if $x\in x(p, w)$ and $w'=p'\cdot x$, then $[p'-p]\cdot[x'-x]\leq 0$ for any $x'\in x(p',w')$. 
+\end{problem}
+\begin{answer}
+	Since $x(p, w)$ satisfies Walras' law, 
+	we have $\forall x \in x(p, w)$ s.t. $p\cdot x = w$. 
+	So we have $x \in x(p, w)$ and $w^\prime = p^\prime \cdot x$.
+	We want to show that $p x^\prime \geq w$ 
+	for any $x^{\prime} \in x\left(p^{\prime}, w^{\prime}\right)$.
+	Assume that $p x^\prime < w$, thus $x^\prime \in B_{p, w}$.
+	By $x \in x(p, w)$, we have $x \succeq x^\prime$.
+	Now we have $w^\prime = p^\prime \cdot x$, so $x \in B_{p^\prime, w^\prime}$.
+	Since $x \succeq x^\prime$, $x \in x(p^\prime, w^\prime)$.
+	However, $x^\prime \in x(p^\prime, w^\prime)$, contradicting to the WARP.
+	So we have $p x^\prime \geq w$.
+	$\left[p^{\prime}-p\right] \cdot\left[x^{\prime}-x\right]=p^{\prime} x^{\prime}-p x^{\prime}-p^{\prime} x+p x$.
+	Since $p^{\prime} x^{\prime}=p^{\prime} x=w^{\prime}$, 
+	$\left.\left[p^{\prime}-p\right]\cdot\left[x^{\prime}-x\right]=p x-p x^{\prime}\right)=w-px^\prime\leq0$.
+	Hence $\left[p^{\prime}-p\right] \cdot\left[x^{\prime}-x\right] \leqslant 0$
+	for any $x^{\prime} \in x\left(p^{\prime}, w^{\prime}\right)$.
+\end{answer}
+
+
+\begin{problem}
+	Show that the lexicographic preference relation (as defined in the lecture notes, on $\mathbb{R}^{2}_{+}$) is complete, transitive, strongly monotone and strictly convex. 
+\end{problem}
+\begin{answer}
+	Assume $X=\mathbb{R}^{2}_{+}$ for any $x, y \in X$, 
+	let $x \succeq y$ if $x_1 > y_1$ or $x_1 = y_1$ and $x_2 \geq y_2$.
+	\begin{itemize}
+		\item complete \\
+			There are six relationships between $x_1$ and $y_1$, $x_2$ and $y_2$: \\
+			$x_{1}>y_{1}, x_{2} \geqslant y_{2}$; 
+			$x_{1}>y_{1}, x_{2}<y_{2}$;
+			$x_{1}=y_{1}, x_{2} \geqslant y_{2}$;
+			$x_{1}=y_{1}, x_{2}<y_{2}$;
+			$x_{1}<y_{1}, x_{2} \geqslant y_{2}$;
+			$x_{1}<y_{1}, x_{2}<y_{2}$.
+			Obviously, the three top relations suggest that $x \succeq y$, 
+			and the last three relations suggest that $y \succeq x$.
+			Thus the lexicographic preference relation is complete.
+		\item transitive \\ 
+			Consider $x \succeq y$ and $y \succeq z$, w.t.s. $x \succeq z$.
+			$x \succeq y$ suggests that $x_1 > y_1$ or $x_1 = y_1$ and $x_2 \geq y_2$,
+			while $y \succeq z$ suggests that $y_1 > z_1$ or $y_1 = z_1$ and $y_2 \geq z_2$.
+			If $x_1 > y_1$ and $y_1 > z_1$, we have $x_1 > z_1$, thus $x \succeq z$;
+			if $x_1 > y_1$ and $y_1 = z_1$, we also have $x_1 > z_1$, thus $x \succeq z$;
+			if $x_1 = y_1$, $x_2 \geq y_2$ and $y_1 > z_1$, we have $x_1 > z_1$, thus $x \succeq z$;
+			if $x_1 = y_1$, $x_2 \geq y_2$ and $y_1 = z_1$, $y_2 \neq z_2$, we have $x_1 = z_1$, $x_2 \geq  z_2$, thus $x \succeq z$.
+			So the lexicographic preference relation is transitive.
+		\item strongly monotone \\
+			For any $x, y \in X$, $x \geq y$ and $x \neq y$, w.t.s. $x \succ y$. 
+			Assume to the contrary, $y \succeq x$.
+			By the definition of the lexicographic preference relation, we have $y_1 > x_1$ or $y_1 = x_1$ and $y_2 \geq x_2$.
+			If $y_1 > x_1$, we have $y \geq x$;
+			if $y_1 = x_1$ and $y_2 \geq x_2$, we also have $y \geq x$, contradicting to $x \geq y$ and $x \neq y$. 
+			Thus the lexicographic preference relation is strongly monotone.
+		\item strictly convex \\
+			Consider $y \succeq x$, $z \succeq x$ and $y \neq z$, w.t.s $\alpha y + (1 - \alpha) z \succ x$.
+			Let $w = \alpha y + (1-\alpha) z$, we have $w_{1}=\alpha y_{1}+(1-\alpha) z_{1}$ and $w_{2}=\alpha y_{2}+(1-\alpha) z_{2}$. 
+			If $y_1 > x_1$ and $z_1 > x_1$, we have $\alpha y_{1}>\alpha x$ and $(1-\alpha) z_{1}>(1-\alpha) x_{1}$.
+			Thus we have $w_{1}=\alpha y_{1}+(1-\alpha) z_{1}>\alpha x_{1}+(1-\alpha) x_{1}=x_{1}$, $w \succeq x$.
+			Since $x \nsucceq w$ we have $w \succ x$.
+			If $y_1 > x_1$ and $z_1 = x_1$, $z_2 \geq x_2$, we also have $w_1 > x_1$, thus $w \succeq x$.
+			If $y_1 = x_1$, $y_2 \geq x+2$ and $z_1 > x_1$, we also have $w_1 > x_1$, thus $w \succeq x$.
+			If $y_1 = x_1$, $y_2 \geq x+2$ and $z_1 = x_1$, we have $w_1 = x_1$ and $w_2 \geq x_2$, thus $w \succeq x$.
+	\end{itemize}
+\end{answer}
+
+
+\begin{problem}
+	Let $u$ be a utility function representing a preference relation $\succeq$. Show that $u$ is strictly quasiconcave if and only if $\succeq$ is strictly convex. 
+\end{problem}
+\begin{answer}
+	$u$ is strictly quasiconcave suggests that $u(\alpha y+(1-\alpha) z)>\min \{u(y) , u(z)\}$;
+	and $\succeq$ is strictly convex suggests that $\alpha y+(1-\alpha) z>x$ for any $x, y, z \in X$ with $y \succeq x$, $z \succeq x$ and $y \neq z$.
+	\begin{itemize}
+		\item Only if part \\
+			Consider $u(\alpha y+(1-\alpha) z)>\min \{u(y) , u(z)\}$ and $u(y) < u(z)$, 
+			we have $u(\alpha y+(1-\alpha) z)>u(y)$ and $\alpha y+(1-\alpha) z \succ y$.
+			by $y \succeq x$ and transitivity, we have $\alpha y+(1-\alpha) z>x$.
+			Also, when $u(z) < u(y)$, we have $\alpha y+(1-\alpha) z>y$.
+		\item If part \\
+			For any $x, y, z \in X$ with $y \succeq x$, $z \succeq x$ and $y \neq z$,
+			we have $\alpha y+(1-\alpha) z>x$, w.t.s $u(\alpha y+(1-\alpha) z)>\min \{u(y) , u(z)\}$.
+			Assume to the contrary, $u(\alpha y+(1-\alpha) z) \leq \min \{u(y) , u(z)\}$.
+			If $u(y)<u(z)$, we have $u(\alpha y+(1-\alpha) z)<u(y)$,
+			thus $y \geq \alpha y+(1-\alpha) z$.
+			Now we have $(1-\alpha) y>(1-\alpha) z$ and $y>z$, contradicting to $u(y)<u(z)$.
+			If $u(y)>u(z)$, we also have $u(\alpha y+(1-\alpha) z)>\min \{u(y), u(z)\}$.
+	\end{itemize}
+\end{answer}
+
+
+\begin{problem}
+	Let $u$ be a continuous utility function and $x(p, w)$ be the corresponding Walrasian demand correspondence derived from utility maximization.  Then $x(p, w)$ can be considered as a choice correspondence defined on $\left\{B_{p, w}: p\gg 0, w>0\right\}$.    
+
+	\noindent (a) Show that $x(p, w)$ satisfies WARP.
+	
+	\noindent (b) Can $x(p, w)$ be rationalized? Explain your answer. 
+\end{problem}
+\begin{answer}
+	\noindent (a)
+	Assume to the contrary, $x \in x(p, w)$, $y \notin x(p, w)$ and $y \in x(p^\prime, w^\prime)$.
+	Since $y \in x\left(p^{\prime}, w^{\prime}\right)$, 
+	we have $u(y) \geqslant u\left(y^{\prime}\right)$ for any $y^{\prime} \in B_{p^{\prime}, w^{\prime}}$,
+	thus we have $u(y) \geqslant u(x)$.
+	By $x \in x(p, w)$ and $y \notin x(p, w)$, we have $u(x)>u(y)$, contradicting to $u(y) \geqslant u(x)$.
+	Thus $x(p, w)$ satisfies WARP.
+	
+	\noindent (b)
+	By the definition of $x(p, w)$, we have $x \in x(p, w)$ that there doesn't exist $y \in B_{p, w}$ such that $u(y)>u(x)$.
+	\begin{itemize}
+		\item complete \\
+			For any $x_1, x_2 \in B_{p, w}$, if $x_1 \succeq x_2$, we have $u\left(x_{1}\right) \geqslant u\left(x_{2}\right)$.
+			If $x_2 \succeq x_1$, we have $u(x_2) \geq u(x_1)$.
+		\item transitive \\
+			Assume to the contrary, if $u(x_1) \geq u(x_2)$, $u(x_2) \geq u(x_3)$ and $u(x_1)<u(x_3)$.
+			By $u(x_1) \geq u(x_2)$ and $u(x_2) \geq u(x_3)$, we have $x_1 \succeq x_2$, $x_3 \succeq x_3$, so $x_1 \succeq x_3$.
+			Thus, we have $u(x_1)\geq u(x_3)$, contradicting to $u(x_1) < u(x_3)$.
+	\end{itemize}
+\end{answer}
+
+
+\begin{problem}
+	Let $u: \mathbb{R}_{+}^{2}\rightarrow \mathbb{R}$ be a continuous utility function, and let $v(p, w)$ be the corresponding indirect utility function. 
+
+	\noindent (a) Prove that for any price vector $p\gg 0$ and consumption bundle $x\in \mathbb{R}^{2}_{+}$ with $x\neq 0$, $v(p, p\cdot x)\geq u(x)$.
+	
+	\noindent (b) Given a consumption bundle $x\in \mathbb{R}^{2}_{+}$, $x\neq 0$, does there always exist a price vector $p\gg 0$ such that $v(p, p\cdot x)= u(x)$? If so, prove it. Otherwise provide a counterexample. 
+\end{problem}
+\begin{answer}
+	\noindent(a)
+	Consider $w^\prime = p \cdot x$, we have $v(p, p x)=v\left(p, w^{\prime}\right)$.
+	By $w^\prime = p x$, we have $x \in B_{p, w^\prime}$.
+	According to the definition of indirect utility function, we know for any $x\in B_{p, w^\prime}$,
+	$v(p, w^\prime) \geq u(x)$, so $v(p, px) \geq u(x)$.
+	
+	\noindent(b)
+	In some cases, there doesn't exist a price vector $p\gg 0$ s.t. $v(p, p x)=u(x)$.\\
+	Counterexample: When the utility function $u\left(x_{1}, x_{2}\right)=x_{1}$, which is continuous, to let $v(p, p x)=u(x)$, we have $\frac{P_{1}}{P_{2}}=\frac{\partial u\left(x^{*}\right) / \partial x_{2}}{\partial u\left(x^{*}\right) / \partial x_{1}}=\frac{0}{1}=0$.
+	In this case, we can not find a price vector that $p\gg 0$ satisfies $v(p, p x)=u(x)$.
+\end{answer}
+
+
+\begin{problem}
+	For each of the following utility functions, derive the Hicksian demand and expenditure function,  at prices $(p_{1},p_{2})\gg 0$ and utility $u>0$.
+
+	\noindent(a) $u(x_{1},x_{2})=\min\left\{2x_{1},3x_{2}\right\}$
+	
+	\noindent(b) $u(x_{1},x_{2})=3x_{1}+2x_{2}$
+	
+	\noindent(c) $u(x_{1},x_{2})=x_{1}^{\alpha}x_{2}^{\beta}$, $\alpha >0, \beta>0$
+\end{problem}
+\begin{answer}
+	\noindent(a) $u(x_{1},x_{2})=\min\left\{2x_{1},3x_{2}\right\}$ \\
+	If $2x_1 \leq 3x_2$, $u(x_1, x_2) = 2x_1$, suppose that $u$ is differentiable,
+	the Lagrangian $\mathcal{L}(x, \lambda)=p_{1} x_{1}+p_{2} x_{2}+\lambda\left(u-2 x_{1}\right)$.
+	We have 
+	$$
+	\left\{\begin{array}{l}\frac{\partial \mathcal{L}}{\partial x_{1}}=p_{1}-2 \lambda=0 \\ \frac{\partial \mathcal{L}}{\partial x_{2}}=p_{2}=0 \\ \frac{\partial \mathcal{L}}{\partial \lambda}=u-2 x_{1}=0\end{array}  \Rightarrow\left\{\begin{array}{l}\lambda=\frac{p_{1}}{2} \\ p_{2}=0 \\ x_{1}=\frac{u}{2}\end{array}\right.\right.
+	$$
+	So the Hicksian demand is $h_{1}(p, u)=\frac{1}{2} u$, $h_{2}(p, u) \geqslant \frac{2}{3} h_{1}(p, u) $,
+	the expenditure function is $p_{1} h_{1}(p, u)+p_{2} h_{2}(p, u) = \frac{1}{2}p_1 u$.
+	If $2x_1 \geq 3_x2$, we have $u(x_1, x_2) = 3x_2$, and the Lagrangian $\mathcal{L}(x, \lambda)=p_{1} x_{1}+p_{2} x_{2}+\lambda\left(u-3 x_{2}\right)$, we have
+	$$
+	\left\{\begin{array}{l}\frac{\partial \mathcal{L}}{\partial x_{1}}=p_{1}=0 \\ \frac{\partial \mathcal{L}}{\partial x_{2}}=p_{2}-3 \lambda=0 \\ \frac{\partial \mathcal{L}}{\partial \lambda}=u-3 x_{2}=0\end{array} \Rightarrow\left\{\begin{array}{l}p_{1}=0  \\ \lambda=\frac{1}{3} p_{2} \\ x_{2}=\frac{1}{3} u \end{array}\right.\right.
+	$$
+	the Hicksian demand is $h_{1}(p, u) \geqslant \frac{3}{2} h_{2}(p, u)$, $h_{2}(p, u)=\frac{u}{3}$,
+	and the expenditure function is $\frac{1}{3}p_2u$.
+	So the Hicksian demand is:
+	$$
+	\left\{\begin{array}{ll}h_{1}(p, u)=\frac{1}{2} u, & h_{2}(p, u) \geqslant \frac{2}{3} h_{1}(p, u) \\ h_{2}(p, u)=\frac{1}{3} u, & h_{1}(p, u) \geqslant \frac{3}{2} h_{2}(p, u)\end{array}\right.
+	$$
+	the expenditure function is:
+	$$
+	\left\{\begin{array}{ll}\frac{1}{2} p_{1} u & \left(x_{2} \geqslant \frac{2}{3} x_{1}\right) \\ \frac{1}{3} p_{2} u & \left(x_{1} \geqslant \frac{3}{2} x_{2}\right)\end{array}\right.
+	$$
+	
+	\noindent(b) $u(x_{1},x_{2})=3x_{1}+2x_{2}$ \\
+	The Lagrangian $\mathcal{L}(x, \lambda)=p_{1} x_{1}+p_{2} x_{2}+\lambda\left(u-3 x_{1}-2 x_{2}\right)$, we have
+	$$
+	\left\{\begin{array}{l}\frac{\partial \mathcal{L}}{\partial x_{1}}=p_{1}-3 \lambda=0 \\ \frac{\partial \mathcal{L}}{\partial x_{2}}=p_{2}-2 \lambda=0 \\ \frac{\partial \mathcal{L}}{\partial \lambda}=u-3 x_{1}-2 x_{2}=0\end{array} \Rightarrow \left\{\begin{array}{l}p_{1}=3 \lambda \\ p_{2}=2 \lambda \\ u=3 x_{1}+2 x_{2}\end{array}\right.\right.
+	$$
+	$$
+	p_{1} x_{1}+p_{2} x_{2}=3 \lambda x_{1}+2 \lambda x_{2}=\lambda\left(3 x_{1}+2 x_{2}\right)=\lambda u=\frac{1}{3} p_{1} u=\frac{1}{2} p_{2} u
+	$$
+	So the Hicksian demand function is $3 h_{1}(p, u)+2 h_{2}(p, u)=u$
+	and the expenditure function is $\frac{1}{3} p_{1} u$ or $\frac{1}{2} p_{2} u$.
+	
+	\noindent(c) $u(x_{1},x_{2})=x_{1}^{\alpha}x_{2}^{\beta}$, $\alpha >0, \beta>0$ \\
+	The Lagrangian $\mathcal{L}(x, \lambda)=p_{1} x_{1}+p_{2} x_{2}+\lambda\left(u-x_{1}^{\alpha} x_{2}^{\beta}\right)$, we have
+	$$
+	\left\{\begin{array}{l}\frac{\partial \mathcal{L}}{\partial x_{1}}=p_{1}-\alpha \cdot x_{2}^{\beta} \cdot \lambda x_{1}^{\alpha-1}=0 \\ \frac{\partial \mathcal{L}}{\partial x_{2}}=p_{2}-\beta \cdot x_{1}^{\alpha} \cdot \lambda x_{2}{ }^{\alpha-1}=0 \\ \frac{\partial \mathcal{L}}{\partial \lambda}=u-x_{1}^{\alpha} x_{2}^{\beta}=0\end{array} \Rightarrow\left\{\begin{array}{l}p_{1}=\alpha \cdot x_{2}^{\beta} \cdot \lambda x_{1}^{\alpha-1} \\ p_{2}=\beta \cdot x_{1}^{\alpha} \cdot \lambda x_{2}^{\beta-1} \\ u=x_{1}^{\alpha} x_{2}^{\beta}\end{array}\right.\right.
+	$$
+	$$
+	\frac{p_{1}}{p_{2}}=\frac{\alpha}{\beta} \cdot \frac{x_{2}^{\beta}}{x_{1}^{\alpha}} \cdot \frac{x_{1}^{\alpha-1}}{x_{2}^{\beta-1}} \Rightarrow x_{2}=\frac{\beta p_{1}}{\alpha p_{2}} \cdot x_{1}
+	$$
+	Thus we have $u=x_{1}^{\alpha+\beta} \beta^{\beta} p_{1}^{\beta} \cdot \alpha^{-\beta} \cdot p_{2}^{-\beta}$, so $x_{1}=\left(\frac{\alpha p_{2}}{\beta p_{1}}\right)^{\frac{\beta}{\alpha+\beta}} \cdot u^{\frac{1}{\alpha+\beta}}$, $x_{2}=\left(\frac{\alpha p_{2}}{\beta p_{1}}\right)^{-1} \cdot\left(\frac{\alpha p_{2}}{\beta p_{1}}\right)^{\frac{\alpha}{\alpha+\beta}} \cdot u^{\frac{\alpha+\beta}{\alpha+\beta}}=\left(\frac{\alpha p_{2}}{\beta p_{1}}\right)^{\frac{-\alpha}{\alpha+\beta}} \cdot u^{\frac{1}{\alpha+\beta}}$.
+	The Hicksian demand function is:
+	$$
+	\left\{\begin{array}{l}h_{1}(p, u)=\left(\frac{\alpha P_{2}}{\beta P_{1}}\right)^{\frac{\beta}{\alpha+\beta}} \cdot u^{\frac{1}{\alpha+\beta}} \\ h_{2} \cdot(p, u)=\left(\frac{\alpha P_{2}}{\beta p_{1}}\right)^{\frac{-\alpha}{\alpha+\beta}} \cdot u^{\frac{\alpha}{\alpha+\beta}}\end{array}\right.
+	$$
+	and the expenditure function is:
+	$$
+	h_{1}(p, u) \cdot p_{1}+h_{2}(p, u) \cdot p_{2}=p_{1} \cdot\left(\frac{\alpha p_{2}}{\beta p_{1}}\right)^{\frac{\beta}{\alpha+\beta}} \cdot u^{\frac{1}{\alpha+\beta}}+p_{2} \cdot\left(\frac{\alpha p_{2}}{\beta p_{1}}\right)^{\frac{-\alpha}{\alpha+\beta}} \cdot u^{\frac{1}{\alpha+1}}
+	$$
+\end{answer}
+
+
+\begin{problem}
+	Suppose that the utility function $u(x)$ is homogeneous of degree one. Show that for any $p\gg 0$, $w>0$ and $\alpha >0$,
+	$$x(p,\alpha w)=\left\{x\in \mathbb{R}^{L}_{+}:x=\alpha y, y\in x(p, w)\right\}$$
+	and
+	$$v(p,\alpha w)=\alpha v(p, w)$$
+	
+	(Hint: in the first part you have to show the two sets are the same. That is, if $x\in x(p, w)$, then $\alpha x \in x(p,\alpha w)$, and if $x\in x(p,\alpha w)$, then $\frac{1}{\alpha}x \in x(p, w)$.)
+\end{problem}
+\begin{answer}
+\vspace{-0.7cm}
+	\begin{itemize}
+		\item $x(p,\alpha w)=\left\{x\in \mathbb{R}^{L}_{+}:x=\alpha y, y\in x(p, w)\right\}$ \\
+			Consider $x \in x(p, w)$, we have $u(x) \geq u(y)$ for any $y \in B_{p, w}$.
+			Consider $z \neq \alpha x$ and $z \in x(p, \alpha w)$, which means $u(z) \geq u(\alpha x)$.
+			Since $u(x)$ is homogeneous of degree one, $u(\alpha x)=\alpha u(x)$ and $u\left(\frac{1}{\alpha} z\right)=\frac{1}{\alpha} u(z)$, we have $\frac{1}{\alpha} z \cdot p \leq w$, $\frac{1}{\alpha} z \in B_{p, w}$, contradicting to $u(x) \geq u(y)$ for any $y \in B_{p, w}$.
+			Thus if $x\in x(p, w)$, then $\alpha x \in x(p, \alpha w)$.
+			Similarly, we can conclude that if $x \in x(p, \alpha w)$, then $\frac{1}{\alpha} x \in x(p, w)$.
+		\item $v(p,\alpha w)=\alpha v(p, w)$ \\
+			Let $v(p, a w)=u(x)$, which means $x \in x(p, \alpha w)$, thus we have $\frac{1}{\alpha} x \in x(p, w)$, which means $v(p, w)=u\left(\frac{1}{\alpha} x\right)=\frac{1}{\alpha} u(x)$.
+			Thus we can conclude that $v(p, \alpha w)=u(x)=\alpha \cdot \frac{1}{\alpha} u(x)=\alpha v(p, w)$.
+	\end{itemize}
+
+\end{answer}
+
+\end{document}

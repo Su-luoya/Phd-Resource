@@ -1,0 +1,223 @@
+\documentclass[12pt, a4paper, oneside]{article}
+\usepackage{amsmath, amsthm, amssymb, bm, graphicx, hyperref, mathrsfs}
+
+\title{\vspace{-3.3cm}\textbf{Problem Set 1}}
+\author{Haotian Deng\\ (SUFE, Student ID: 2023310114)}
+\date{}
+\linespread{1}
+\newcounter{problemname}
+\newcounter{answername}
+\newenvironment{problem}{\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}\newline}}{\\\par}
+\newenvironment{answer}{\stepcounter{answername}\par\noindent\textbf{Answer to problem \arabic{answername}\newline}}{\\\par}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+
+Consider a new model of preferences, the $PI$-model. 
+The primitives of this model are two binary relations, $P$ and $I$, defined on $X$, where $P$ is interpreted as the ``strictly better than" relation, and $I$ is interpreted as the ``indifference" relation.
+We impose three conditions on $P$ and $I$ in this model: 
+ (1) for any $x \in X$, $x I x$ and $x \bar{P} x$;
+ (2) for any $x, y \in X$ with $x \neq y$, exactly one of the following three is true: $xPy$, $yPx$ and $xIy$;
+ (3) both $P$ and $I$ are transitive.
+Based on the construction in this model, prove the following results.
+
+(a) $I$ is symmetric.
+
+(b) If $xPy$ and $yIz$, then $xPz$; If $xIy$ and $yPz$, then $xPz$.
+
+(c) The $PI$-model is equivalent to the $\succeq$-model.
+\end{problem}
+
+\begin{answer}
+
+\noindent\textbf{(a) $I$ is symmetric.}
+
+Consider any $x, y \in X$ with $xIy$, hence by the second condition of this model, both $xPy$ and $yPx$ are not true. 
+Then consider a similar argument, if both $yPx$ and $xPy$ are not true, we have $yIx$ for all $x, y \in X$. 
+Therefore, for any $x, y \in X$ with $x \neq y$, $xIy$ implies $yIx$, $I$ is symmetric.
+\newline
+
+\noindent\textbf{(b) If $xPy$ and $yIz$, then $xPz$; If $xIy$ and $yPz$, then $xPz$.}
+
+(1) If $xPy$ and $yIz$, then $xPz$.
+
+Suppose $xIz$, as $I$ is transitive and $yIz$, we have $zIy$, contradiction.
+Suppose $zPx$, as $P$ is transitive and $xPy$, we have $zPy$, contradiction. 
+Hence by the second condition of this model, we have $xPz$.
+
+(2) If $xIy$ and $yPz$, then $xPz$.
+
+Suppose $xIz$, as $I$ is transitive and $xIy$, we have $zIy$, contradiction.
+Suppose $zPx$, as $P$ is transitive and $yPz$, we have $yPx$, contradiction.
+Hence by the second condition of this model, we have $xPz$.
+\newline
+
+\noindent\textbf{(c) The $PI$-model is equivalent to the $\succeq$-model.}
+\newline
+
+\noindent\textbf{Proposition:}
+
+\noindent(1) Given the complete and transitive $\succeq$, define two new binary relations, $P^\prime$ and $I^\prime$ as follows: for any $x, y \in X$, $ xP^\prime y$ if $x\succeq y$ and $y \nsucceq x$, $xI^\prime y$ if $x\succeq y$ and $y\succeq x$. Then $P^\prime$ and $I^\prime$ satisfy the three conditions above.
+
+\noindent(2) Given the three conditions on $P$ and $I$, define a new binary relation $\succeq^\prime$ as followers: for any $x, y \in X$, $x\succeq^\prime y$ if $xPy$ or $xIy$. Then $\succeq^\prime$ is completeness and transitivity.
+\newline
+
+\noindent\textbf{Proof:}
+
+\noindent(1) $\succeq$-model $\rightarrow$ $PI$-model
+\newline
+
+\noindent \textit{Condition(1):}
+
+For any $x, y \in X$ with $x=y$, by the construction of $I^\prime$ and $P^\prime$ and the completeness of $\succeq$, $xI^\prime x$ and $x\bar{P}^\prime x$.
+\newline
+
+\noindent \textit{Condition(2):}
+
+If $xP^\prime y$, then $x\succeq y$ and $y\nsucceq x$, obviously both $yP^\prime x $ and $xI^\prime y$ are not true. 
+So by a similar argument, it can be shown that only one of $x P^\prime y$, $yP^\prime x$ and $xI^\prime y$ is true.
+\newline
+
+\noindent \textit{Condition(3):}
+
+Consider any $x, y, z \in X$ with $xP^\prime y$ and $yP^\prime z$. 
+By the definition of $P^\prime$ and the transitivity and the negatively transitivity of $\succeq$, we have $xP^\prime z$. 
+Consider any $ x, y, z\in X $ with $x I^\prime y$ and $yI^\prime z$. By the definition of $I^\prime$ and the transitivity of $\succeq$, we have $xI^\prime z$.
+\newline
+
+\noindent(2) $PI$-model $\rightarrow$ $\succeq$-model
+\newline
+
+\noindent\textit{Completeness:}
+
+For any $x, y \in X$, by the definition of $\succeq^\prime$ and the second condition of $PI$-model, we have $x\succeq^\prime y$ or $y \succeq^\prime x$.
+\newline
+
+\noindent\textit{Transitivity:}
+
+Consider any  $x, y, z \in X$with $x \succeq^\prime y$ and $y\succeq^\prime z$. 
+By the definition $\succeq^\prime$, we have $xPy$or $xIy$ and $yPz$ or $yIz$. 
+Then by the transitivity of $P$ and $I$ and second result above, we have $x  \succeq^\prime z$.
+\end{answer}
+
+\begin{problem}
+ 
+Let C be a choice correspondence defined on the domain $\mathscr{D}$. 
+Assume that for any $A, B \in\mathscr{D}$ with $A\cap B \neq \emptyset$, $A \cap B \in \mathscr{D}$. 
+Show that if $C$ satisfies Sen's properties $\alpha$ and $\beta$, then $C$ satisfies the weak axiom of revealed preference. 
+\end{problem}
+
+\begin{answer}
+
+Assume that C satisfies Sen's properties $\alpha$ and $\beta$ while C does not satisfy WARP.
+If C does not satisfy WARP, it means that 
+if for some $A\in \mathscr{D}$ with $x, y \in A$, $x\in C(A)$ and $y\notin C(A)$, 
+there exists $y\in C(B)$ for some $B\in \mathscr{D}$ with $x, y\in B$.
+
+Let $\{x, y\}\subseteq A\cap B \subseteq A$, $x\in C(A)$ and $y\notin C(A)$, by Sen’s properties $\alpha$, $x\in C(A\cap B)$.
+And since there exists $y\in C(B)$ and $y\in A\cap B \subseteq B$, then by Sen’s properties $\alpha$, we have $y \in C(A\cap B)$.
+Thus, we have both $x, y \in C(A\cap B)$. 
+As we also know that $A\cap B \subseteq A$ and $x\in C(A)$, then by Sen’s properties $\beta$, we have $y\in C(A)$, contradiction.
+
+Hence when C satisfies Sen's properties $\alpha$ and $\beta$, it must satisfy WARP.
+\end{answer}
+
+\begin{problem}
+
+Let $\succeq$ be a preference relation defined on a finite set $X$, and $\succ$ is the asymmetric component of $\succeq$.
+Notice that $\succeq$ is not assumed to be rational. 
+We say $\succ$ is \textit{acyclic} if there does not exist a list ($x_1, x_2, \dots, x_{n−1}, x_n$) such that $x_k\in X$ for each $k \in {1, 2, \dots, n}$, $ n \geq 2$, and $ x_1 \succ x_2 \succ ... \succ x_{n−1} \succ x_n \succ x_1$. 
+For any$ A\subseteq X$, let
+$$
+C_{\succ}(A)=\{x \in A : \text{there does not exist} \ y \in A\ \text{such that}\ y \succ x\}.
+$$
+Prove the following results.
+
+\noindent(a)
+$C_{\succ}(A) \neq \phi$ for all non-empty $A\subseteq X$ if and only if $\succ$ is \textit{acyclic}.
+
+\noindent(b)
+Assume $\succ$ is \textit{acyclic}. $C_{\succ}$ satisfies Sen's property $\alpha$, but may not satisfy property $\beta$.
+\end{problem}
+
+\begin{answer}
+
+\noindent\textbf{(a)
+$C_{\succ}(A) \neq \phi$ for all non-empty $A\subseteq X$ if and only if $\succ$ is \textit{acyclic}.}
+\newline
+
+\noindent(1) $C_{\succ}(A) \neq \phi$ for all non-empty $A\subseteq X$ $\rightarrow$ $\succ$ is \textit{acyclic}
+
+Assume to the contrary, $\succ$ is not \textit{acyclic}, 
+which means there exists a list $(x_1, x_2, \dots, x_{n−1}, x_n)$ such that $x_k\succ x_{k+1}(k\in1,2,\dots,n-1)$ and $ x_n\succ x_1$. 
+That is to say, for every $x_k\in X$, there always exists $y\succ x$, hence$ C_{\succ}(A) = \phi$, contradiction. 
+Thus,$\succ $ must be \textit{acyclic}.
+ \newline
+
+\noindent(2) $\succ$ is \textit{acyclic} $\rightarrow$ $C_{\succ}(A) \neq \phi$ for all non-empty $A\subseteq X$
+
+Assume to the contrary, $\exists $ a non-empty $A\subseteq X$, $C_{\succ}(A) = \phi$. 
+Consider any $x\in A$. 
+Since $x \notin C_{\succ}(A)$, there exists $y\in A$ such that $y\succ x$. 
+Let $A=\{x_1\}$ and $x_1\succ x_2\succ\dots\succ x_k(k\geq2)$, 
+if there exists $y\in A$ such that $y \succ x$, we have $x_1\succ x_1$, 
+which contradicts to the presumption that $\succ$ is \textit{acyclic}. 
+Thus, $C_{\succ}(A) \neq \phi$ for all non-empty $A\subseteq X$.
+\newline
+
+\noindent\textbf{(b)
+Assume $\succ$ is \textit{acyclic}. $C_{\succ}$ satisfies Sen's property $\alpha$, but may not satisfy property $\beta$.}
+\newline
+
+\noindent(1) Sen's property $\alpha$
+
+Define $A\subseteq B\in\mathscr{D}$, since $\succ$ is \textit{acyclic}, 
+we have $C_{\succ}(B)\neq \phi$, so that $ x\in C_{\succ}(B)$. 
+By the definition of $C_{\succ}(B)$, there does not exist $y\in B$ such that $y\succ x$. 
+Since $A\subseteq B$, it also means there does not exist $ y\in A$ such that $y\succ x$. 
+Hence $x\in C_{\succ}(A)$, $C_{\succ}$ satisfies Sen's property $\alpha$.
+\newline
+
+\noindent(2) Sen's property $\beta$
+
+Let $\mathscr{D}=\{x_1,x_2,x_3\}$, since $\succ$ is \textit{acyclic}, 
+we can assume that $x_1\succ x_2\succ x_3$, $x_3\nsucc x_1$ and $ A=\{x_1,x_3\}\subseteq B=\{x_1,x_2,x_3\}\in \mathscr{D}$.
+Notice that $\succ $ is not assumed to be transitive, we don't have $x_1\succ x_3$.
+Thus we have $C_{\succ}(A)=\{x_1,x_3\}$ and $ C_{\succ}(B)=\{x_1\}$.
+\end{answer}
+
+\begin{problem}
+
+Show that if a choice correspondence $C$ (defined on the domain $\mathscr{D}$) can be rationalized, 
+then it satisfies the \textit{path-invariance} property: 
+for any $B_{1}, B_{2} \in \mathscr{D}$ such that $B_{1} \cup B_{2} \in \mathscr{D}$ and $C\left(B_{1}\right) \cup C\left(B_{2}\right) \in \mathscr{D}$, we have
+$C\left(B_{1} \cup B_{2}\right)=C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right)$.
+\end{problem}
+
+\begin{answer}
+
+Obviously, $C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right) \subseteq C\left(B_{1} \cup B_{2}\right)$. Then we only need to prove that $ C\left(B_{1} \cup B_{2}\right)\subseteq C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right)$, that is to say, we want to for that for any $x\in C\left(B_{1} \cup B_{2}\right)$,
+$x\in C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right)$. 
+
+If $C$ can be rationalized, then there exists rational $\succeq$ such that $C=C_{\succeq}$. 
+We know that $C_{\succeq}$ satisfies WARP, hence Sen's property $\alpha$. 
+Since $x\in C\left(B_{1} \cup B_{2}\right)$, 
+$B_{1} \subseteq\left(B_{1} \cup B_{2}\right)$,
+$B_{2} \subseteq\left(B_{1} \cup B_{2}\right)$ and Sen's property $\alpha$, 
+we have$ x\in C(B_1)$ and $ x\in C(B_2)$. 
+Since $ x\in C(B_1)\subseteq B_1$ and $x\in C(B_2)\subseteq B_2$, 
+we have $x\in C(B_1)\cup C(B_2)\subseteq B_1\cup B_2$. 
+According to Sen's property $\alpha$, $x\in C(B_1)\cup C(B_2)\subseteq B_1\cup B_2$ and $x\in C\left(B_{1} \cup B_{2}\right)$, we have $x\in C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right)$. 
+Hence $ C\left(B_{1} \cup B_{2}\right)\subseteq C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right)$. 
+
+Combining both $ C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right)\subseteq C\left(B_{1} \cup B_{2}\right)$
+and
+$ C\left(B_{1} \cup B_{2}\right)\subseteq C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right)$, 
+we have $C\left(B_{1} \cup B_{2}\right)=C\left(C\left(B_{1}\right) \cup C\left(B_{2}\right)\right)$. Q.E.D.
+\end{answer}
+	
+\end{document}

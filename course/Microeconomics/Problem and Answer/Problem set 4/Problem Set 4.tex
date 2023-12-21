@@ -1,0 +1,262 @@
+\documentclass[12pt, english]{article}
+\usepackage{enumerate}
+\usepackage[charter]{mathdesign}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage[authoryear]{natbib}
+\usepackage[all]{xy}
+\onehalfspacing
+\usepackage[unicode=true, pdfusetitle,
+ bookmarks=true, bookmarksnumbered=false, bookmarksopen=false,
+ breaklinks=false, pdfborder={0 0 1}, backref=false, colorlinks=true]
+ {hyperref}
+\hypersetup{
+ citecolor={darkblue}, urlcolor={darkblue}, linkcolor={darkblue}}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\noun}[1]{\textsc{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\date{}
+\bibpunct{(}{)}{,}{a}{,}{,} 
+\usepackage{hyperref}
+\let\ref\autoref
+\usepackage{xcolor}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\usepackage[all]{xy}
+\makeatletter
+\newcommand{\xyC}[1]{%
+\makeatletter
+\xydef@\xymatrixcolsep@{#1}
+\makeatother
+} % end of \xyC
+\makeatletter
+\newcommand{\xyR}[1]{%
+\makeatletter
+\xydef@\xymatrixrowsep@{#1}
+\makeatother
+} % end of \xyR
+
+
+\makeatother
+
+\newcounter{problemname}
+\newcounter{answername}
+\newenvironment{problem}{\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.}}{\\\par}
+\newenvironment{answer}{\stepcounter{answername}\par\noindent\textbf{Answer to Problem \arabic{answername}.\newline}}{\\\par\bigskip}
+
+\linespread{1.5}
+
+\title{\vspace{-3.3cm}\textbf{Problem Set 4}}
+\author{Haotian Deng\\ (SUFE, Student ID: 2023310114)}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+	Solve the following game using iterative elimination of strictly dominated strategies (write down each step of elimination).	
+	\begin{equation*}
+		\begin{tabular}{|l|l|l|l|}			\hline			& L & C & R \\ \hline			T & -5,-1 & 2,2 & 3,3  \\ \hline			M & 0,10 & 1,0 & 1,-10 \\ \hline
+			B & 1,-3 & 1,2 & 1,1\\ \hline
+		\end{tabular}%
+	\end{equation*}	
+\end{problem}
+\begin{answer}
+	Player 1's strategy M is strictly dominated by $\frac{1}{6}$T+$\frac{5}{6}$B. Thus, M can be eliminated.
+	\begin{equation*}
+		\begin{tabular}{|l|l|l|l|}			\hline			& L & C & R \\ \hline			T & -5,-1 & 2,2 & 3,3  \\ \hline
+			B & 1,-3 & 1,2 & 1,1\\ \hline
+		\end{tabular}%
+	\end{equation*}	
+	Next, for player 2, the strategy L is strictly dominated by either C or L against any strategies of player 1. Thus, L can be eliminated.
+	\begin{equation*}
+		\begin{tabular}{|l|l|l|}			\hline			& C & R \\ \hline			T & 2,2 & 3,3  \\ \hline
+			B & 1,2 & 1,1\\ \hline
+		\end{tabular}%
+	\end{equation*}	
+	Then, for player 1 again, the strategy B is strictly dominated by T against any of the strategies of player 2. Thus, B can be eliminated.
+	\begin{equation*}
+		\begin{tabular}{|l|l|l|}			\hline			& C & R \\ \hline			T & 2,2 & 3,3  \\ \hline
+		\end{tabular}%
+	\end{equation*}	
+	Finally, for player 2, the strategy C is strictly dominated. Thus the result of the game is (T,R).
+\end{answer}
+
+\begin{problem}
+	Find all the Nash equilibria of the following game.
+	\begin{equation*}
+		\begin{tabular}{|l|l|l|l|}
+		\hline		& L & R  \\ \hline		T & 2,1 & 0,2  \\ \hline		B & 1,2 & 3,0  \\ \hline
+		\end{tabular}%
+	\end{equation*}
+\end{problem}
+\begin{answer}
+	Assume that $(\alpha T + (1-\alpha)B, \beta L + (1-\beta)R )$ is a Nash equilibria. Thus
+	$$
+	\begin{array}{c}
+		2\beta+0(1-\beta)=\beta+3(1-\beta)
+		\\
+		\alpha+2(1-\alpha)=2\alpha+0(1-\alpha)
+	\end{array}
+	$$
+	So we have $\alpha=\frac{2}{3}, \beta=\frac{3}{4}$. $(\frac{2}{3} T + \frac{1}{3}B, \frac{3}{4} L + \frac{1}{4}R )$ is a Nash equilibria.
+\end{answer}
+
+\begin{problem}(\textbf{Tragedy of the commons})
+	Suppose there are only two farmers, Farmer 1 and Farmer 2, who can graze their goats on the village green - the Common. In the spring, both farmers simultaneously decide how many goats to own and farmer $i$ chooses $g_{i}\in \mathbb{R}_{+}$ (ignoring the integer problem). The cost of buying and caring for one goat is $c>0$ for both farmers. At the end of the year, the value of a goat is defined as ($G$: total number of goats in the village)
+	$$
+	v(g_{1}+g_{2})=v(G)=2c-(g_{1}+g_{2})^{2}=2c-G^{2}
+	$$
+	
+	\noindent (a) Find the best response functions for the two farmers. 
+	
+	\noindent (b) Find the pure strategy Nash equilibrium of this game. 
+	
+	\noindent (c) Find the total number of goats $G^{*}$ in the NE, and the optimal number of goats $G^{**}$ in the village (the number of goats that maximize their total profits). Compare $G^{*}$ and $G^{**}$, what can you conclude from the comparison? 
+\end{problem}
+\begin{answer}
+	\noindent (a) For farmers, the optimal number of sheep to raise should be the amount that brings them the highest profit.
+	$$
+	\begin{array}{c}
+		\text{Max}\ v(g_1+g_2)g_i-c\cdot g_i
+		\\
+		g_i \geq 0
+		\\
+		v(g_1+g_2)=2c-(g_1+g_2)^2
+	\end{array}
+	$$
+	Thus we have
+	$$
+	\frac{\partial v}{\partial g_i}g_i+v-c=0
+	$$
+	So
+	$$
+	\begin{cases}
+		-2g_1(g_1+g_2)+c-(g_1+g_2)(g_1+g_2)=0
+		\\
+		-2g_2(g_1+g_2)+c-(g_1+g_2)(g_1+g_2)=0
+	\end{cases}
+	$$
+	Thus we have
+	$$
+	\begin{cases}
+		g_1=\frac{1}{3}(-2g_2+\sqrt{g_2^2+3c})
+		\\
+		g_2=\frac{1}{3}(-2g_1+\sqrt{2g_1+3c})
+	\end{cases}
+	$$
+	
+	\noindent (b) According to (a), we have
+	$$
+	-2g_i(g_1+g_2)+c-(g_1+g_2)^2=0
+	$$
+	Thus we have $g_1=g_2=\frac{\sqrt{2c}}{4}$.
+	
+	\noindent (c) $G^*=g_1+g_2=\frac{\sqrt{2c}}{2}$.
+	$$
+		\begin{array}{c}
+		\text{Max}\ (2c-G^2)G-cG
+		\\
+		G \geq 0
+	\end{array}
+	$$
+	Thus we have 
+	$$
+	\frac{\partial v}{\partial G}G+v-c=0
+	$$
+	So $G=\frac{\sqrt{3c}}{3}$, $G^{**}=\frac{\sqrt{3c}}{3}<G^*$.
+	$\pi_1^*=\pi_2^*=(v-c)g_i=\frac{c\sqrt{2c}}{8}$, $\pi^*=\pi_1^8+\pi_2^*=\frac{c\sqrt{2c}}{4}$, $\pi^{**}=(v-c)G=\frac{2c\sqrt{3c}}{9}>\pi^*$.
+	
+	After comparison, it is evident that if farmers' choices are considered separately (i.e., without cooperation amongst the farmers), the number of sheep purchased at the Nash equilibrium is greater than the number purchased when farmers cooperate (i.e., when the farm is treated as a whole). However, cooperation can lead to greater overall profits. Therefore, farmers should cooperate and ultimately share the profits equally.
+\end{answer}
+
+\begin{problem}(\textbf{Simultaneous bargaining})
+	Consider the following simple bargaining game. Players 1 and 2 have preferences over two goods, $x$ and $y$. Player 1 is endowed with one unit of good $x$ and none of good $y$, while player 2 is endowed with one unit of $y$ and none of good $x$. Player $i$, $i\in \left\{1,2\right\}$, has utility function $u_{i}(x_{i},y_{i})=\text{min}\left\{x_{i},y_{i}\right\}$ where $x_{i}$ is $i$'s consumption of $x$ and $y_{i}$ is his consumption of $y$. The "bargaining" works as follows: Each player simultaneously hands any (nonnegative) quantity of the good he possesses (up to his entire endowment) to the other player.
+	
+	\noindent (a) Write down this game as a normal form game.
+
+	\noindent (b) Find all the pure strategy Nash equilibria of this game.
+\end{problem}
+\begin{answer}
+	\noindent (a) Player 1 choose to hand over $a$ units of good $x$ to player 2, and player 2 choose to hand over $b$ units of good $y$ to player 1.
+	$$
+	u_1=
+	\begin{cases}
+		1-a,\ 1-a<b \\
+		b,\ 1-a\geq b
+	\end{cases}\quad
+	u_2=
+	\begin{cases}
+		1-b,\ 1-a<b \\
+		a,\ 1-a\geq b
+	\end{cases}
+	$$
+	
+	\noindent (b) According to (a), we have
+	$$
+	u = 
+	\begin{cases}
+		(1-a, 1-b),\ 1-a<b
+		\\
+		(b, a),\ 1-a \geq b
+	\end{cases}
+	$$
+\end{answer}
+
+\begin{problem}(\textbf{Bystander effect})
+	Alvin slips and injures himself on a sidewalk. There are $n\geq 2$ people nearby observing the accident. Alvin needs at least one of the $n$ bystanders to call 120 for immediate medical attention. Each of the $n$ bystanders simultaneously and independently decides whether or not to call 120. If a bystander calls, she receives a payoff of $v-c>0$, interpreted as the difference between the benefit of knowing Alvin will be helped ($v$) and the cost of calling ($c>0$). If a bystander  does not call, her payoff is $v$ if at least one of the remaining $(n-1)$ people calls for help, and her payoff is $0$ if no one calls.
+	
+	\noindent (a) Find all the pure strategy Nash equilibria of this game. 
+
+	\noindent (b) Find the symmetric mixed strategy Nash equilibrium in which each bystander calls with the same probability. In addition, given this equilibrium, derive an expression for the probability that Alvin receives medical attention, as a function of $n$. Is Alvin better-off with a larger or a smaller crowd of witnesses?
+\end{problem}
+\begin{answer}
+	\noindent (a) 
+	All Call: Each bystander calls, receiving a payoff of $v-c$. This is a Nash equilibrium if $v-c>0$, which is given. Each bystander prefers to call rather than not call, given that the others are calling.
+	None Call: No bystander calls. This is a Nash equilibrium if every bystander believes that at least one of the other bystanders will call. The payoff for not calling while someone else calls is $v$, which is greater than the payoff for calling $(v-c)$.
+	
+	\noindent (b) Assume that each of the $n$ bystanders independently decides to call with some probability $p$, where $0<p<1$.
+	The probability that at least one of the $n-1$ other bystanders calls is $1-(1-p)^{n-1}$. Hence, the expected payoff for not calling is $v[1-(1-p)^{n-1}]$.
+	In equilibrium, the expected payoffs of calling and not calling must be equal, so:
+	$$
+	\begin{cases}
+		v-c=v \times\left[1-(1-p)^{n-1}\right] \\ 1-c / v=\left[1-(1-p)^{n-1}\right] \\ c / v=(1-p)^{n-1}
+	\end{cases}
+	$$
+	Solving for $p$, we have $p=1-(\frac{c}{v})^{\frac{n}{n-1}}$. Alvin would prefer to have more bystanders. This is because as the number of bystanders increases, the probability of at least one person making a phone call also increases.
+\end{answer}
+
+\begin{problem}(\textbf{Choosing locations})
+	Consumers are uniformly distributed along a boardwalk that is 1 mile long. Ice-cream prices are regulated, so consumers go to the nearest vendor because they dislike walking (assume that at the regulated prices all consumers will purchase an ice cream even if they have to walk a full mile). If more than one vendor is at the same location, they split business evenly.
+
+	\noindent (a) Consider a game in which two ice-cream vendors pick their locations simultaneously. Show that there exists a unique pure strategy Nash equilibrium and that it involves both vendors locating at the midpoint of the boardwalk.
+
+	\noindent (b) Show that with three vendors, no pure strategy Nash equilibrium exists. 
+\end{problem}
+\begin{answer}
+	\noindent (a)
+	If both vendors choose the midpoint (0.5 mile), neither has an incentive to move. If one vendor moves slightly to the left or right, the other vendor would still cover half of the boardwalk plus half of the distance between them, thus splitting the customers evenly. Moving away from the center only decreases their customer base.
+	If one vendor is not at the midpoint, the best response for the other vendor is to move next to them, splitting the business evenly and leaving the rest of the boardwalk unserved. The vendor not at the midpoint can then increase their share by moving towards the midpoint.
+	Repeated application of this logic leads both vendors to converge to the midpoint, where neither has an incentive to deviate. This location maximizes their respective customer bases while minimizing walking distance for customers.
+	Therefore, the unique pure strategy Nash equilibrium is for both vendors to locate at the midpoint (0.5 mile) of the boardwalk.
+	
+	\noindent (b)
+	If all three vendors choose the same location, say the midpoint, each would get $\frac{1}{3}$ of the customers. However, one vendor has an incentive to move slightly away to capture more than $\frac{1}{3}$ of the customers.
+	If they do not choose the same location, the vendor in the middle is at a disadvantage because their customer base is limited to the segment between the other two vendors. This middle vendor has an incentive to move closer to one of the ends, thus increasing their customer base.
+	Given this incentive for the middle vendor to move, no stable configuration exists where all vendors have no incentive to deviate from their chosen locations.
+	Therefore, with three vendors, no pure strategy Nash equilibrium exists. The vendors have continuous incentives to adjust their positions to capture a larger share of customers, leading to an unstable competitive situation.
+\end{answer}
+
+\end{document}

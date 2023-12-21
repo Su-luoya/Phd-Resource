@@ -1,0 +1,37 @@
+% Q1 NKPCI, rho=0, output shock
+
+var Y pi R uis upi ump;
+varexo epsis epspi epsmp;
+parameters the bet kappa phipi phiy rho sig;
+the=1;
+bet = 0.99;
+kappa=0.1275;
+rho=0;
+phipi = 0.5;
+phiy =0.125;
+sig = 0.01;
+
+
+model(linear);
+%(1) NKIS curve
+Y = Y(+1) - R /the+uis;
+
+%(2) NKPCI
+pi = (kappa/(1+bet))*Y + (bet/(1+bet))*pi(+1)+(1/(1+bet))*pi(-1)+upi;
+
+%(3) Monetary policy
+R = phipi*pi(+1)+phiy*Y(+1) +ump;
+
+uis=rho*uis(-1)+ epsis;
+upi=rho*upi(-1)+ epspi;
+ump=rho*ump(-1)+ epsmp;
+
+end;
+
+shocks;
+var epsis =0.01^2;
+var epspi =0;
+var epsmp =0;
+end;
+
+stoch_simul(order=1) Y pi R;

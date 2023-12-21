@@ -1,0 +1,117 @@
+\documentclass[12pt,english]{article}
+\usepackage{enumerate}
+\usepackage[charter]{mathdesign}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage[authoryear]{natbib}
+\usepackage[all]{xy}
+\onehalfspacing
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true]
+ {hyperref}
+\hypersetup{
+ citecolor={darkblue}, urlcolor={darkblue}, linkcolor={darkblue}}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\noun}[1]{\textsc{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\date{}
+\bibpunct{(}{)}{,}{a}{,}{,} 
+\usepackage{hyperref}
+\let\ref\autoref
+\usepackage{xcolor}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\usepackage[all]{xy}
+\makeatletter
+\newcommand{\xyC}[1]{%
+\makeatletter
+\xydef@\xymatrixcolsep@{#1}
+\makeatother
+} % end of \xyC
+\makeatletter
+\newcommand{\xyR}[1]{%
+\makeatletter
+\xydef@\xymatrixrowsep@{#1}
+\makeatother
+} % end of \xyR
+
+
+\makeatother
+
+\begin{document}
+
+	
+\begin{center}
+\begin{large}
+\textbf{Problem Set 1}
+\end{large}
+\bigskip
+
+Due on September 21
+\end{center}
+
+\noindent\textbf{Problem 1.} 
+Consider a new model of preferences, the \emph{$PI$-model}. The primitives of this model are two binary relations, $P$ and $I$, defined on $X$, where $P$ is interpreted as the "strictly better than" relation, and $I$ is interpreted as the "indifference" relation. We impose three conditions on $P$ and $I$ in this model: 
+(1) for any $x\in X$, $xIx$  and $x\bar{P}x$; (2) for any $x,y\in X$ with $x\neq y$, \emph{exactly} one of the following three is true: $xPy,yPx$ and $xIy$; (3) both $P$ and $I$ are transitive. Based on the construction in this model, prove the following results. 
+
+\noindent(a) $I$ is symmetric.  
+
+\noindent(b) If $xPy$ and $yIz$, then $xPz$. If $xIy$ and $yPz$, then $xPz$.
+
+\noindent (c) The $PI$-model is equivalent to the $\succeq$-model.  
+
+\bigskip
+
+\noindent\textbf{Problem 2.} Let $C$ be a choice correspondence
+defined on the domain $\mathcal{D}$. Assume that for any $A,B\in \mathcal{D}$ with $A\cap B\neq \emptyset$, $A\cap B\in \mathcal{D}$. Show that if $C$
+satisfies Sen's properties $\alpha$ and $\beta$, then 
+$C$ satisfies the weak axiom of revealed preference. 
+
+
+\bigskip
+
+\noindent\textbf{Problem 3.} 
+Let $\succeq$ be a preference relation defined on a \emph{finite} set $X$, and $\succ$ is the asymmetric 
+component of $\succeq$. Notice that $\succeq$ is not assumed to be rational. We say $\succ$ is \emph{acyclic} if there does not exist a list $(x_{1},x_{2},...,x_{n-1},x_{n})$ such that $x_{k}\in X$ for each $k\in \left\{1,2,...,n\right\}$, $n\geq 2$, and 
+$x_{1}\succ x_{2}\succ...\succ x_{n-1}\succ x_{n}\succ x_{1}$. 
+For any $A\subseteq X$, let 
+\[C_{\succ}(A)=\big\{x\in A: \text{there does not exist}\;\; y\in A \;\;\text{such that}\;\; y\succ x\big\}.\]
+Prove the following results. 
+
+\noindent (a)$C_{\succ}(A)\neq \phi$ for all non-empty  $A\subseteq X$ if and only if $\succ$ is acyclic. 
+
+\noindent (b) Assume $\succ$ is acyclic. $C_{\succ}$ satisfies Sen's property $\alpha$, but may not satisfy property $\beta$. 
+
+\bigskip
+
+\noindent\textbf{Problem 4.} 
+Show that if a choice correspondence $C$
+(defined on the domain $\mathcal{D}$) can be rationalized, then it satisfies the \emph{path-invariance} property: for any $B_{1},B_{2}\in \mathcal{D}$ such that $B_{1}\cup B_{2}\in \mathcal{D}$ and $C(B_{1})\cup C(B_{2})\in \mathcal{D}$,
+we have $$C(B_{1}\cup B_{2})= C\big(C(B_{1})\cup C(B_{2})\big).$$
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+\end{document}

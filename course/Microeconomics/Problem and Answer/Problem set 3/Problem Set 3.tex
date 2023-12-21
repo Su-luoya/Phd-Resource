@@ -1,0 +1,222 @@
+\documentclass[12pt, english]{article}
+\usepackage{enumerate}
+\usepackage[charter]{mathdesign}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage[authoryear]{natbib}
+\usepackage[all]{xy}
+\onehalfspacing
+\usepackage[unicode=true, pdfusetitle,
+ bookmarks=true, bookmarksnumbered=false, bookmarksopen=false,
+ breaklinks=false, pdfborder={0 0 1}, backref=false, colorlinks=true]
+ {hyperref}
+\hypersetup{
+ citecolor={darkblue}, urlcolor={darkblue}, linkcolor={darkblue}}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\newcommand{\noun}[1]{\textsc{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\date{}
+\bibpunct{(}{)}{,}{a}{,}{,} 
+\usepackage{hyperref}
+\let\ref\autoref
+\usepackage{xcolor}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+\usepackage[all]{xy}
+\makeatletter
+\newcommand{\xyC}[1]{%
+\makeatletter
+\xydef@\xymatrixcolsep@{#1}
+\makeatother
+} % end of \xyC
+\makeatletter
+\newcommand{\xyR}[1]{%
+\makeatletter
+\xydef@\xymatrixrowsep@{#1}
+\makeatother
+} % end of \xyR
+
+
+\makeatother
+
+\newcounter{problemname}
+\newcounter{answername}
+\newenvironment{problem}{\stepcounter{problemname}\par\noindent\textbf{Problem \arabic{problemname}.}}{\\\par}
+\newenvironment{answer}{\stepcounter{answername}\par\noindent\textbf{Answer to Problem \arabic{answername}.\newline}}{\\\par\bigskip}
+
+\linespread{1.5}
+
+\title{\vspace{-3.3cm}\textbf{Problem Set 3}}
+\author{Haotian Deng\\ (SUFE, Student ID: 2023310114)}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+	An individual has Bernoulli utility function $u(\cdot)$ and initial wealth w. Let lottery $L$ offer a payoff of $G$ with probability $p$ and a payoff of $B$ with probability $1-p$.
+	\\
+	(a) If the individual owns the lottery, what is the minimum price he would sell it for?
+	\\
+	(b) If he does not own it, what is the maximum price he would be willing to pay for it?
+	\\
+	(c) Are buying and selling prices equal? Give an economic interpretation for your answer. Hind conditions on the parameters of the problem under which buying and selling prices are equal.
+	\\
+	(d) Let $G=10$, $B=5$, $w=10$, and $u(x)=\sqrt{x}$. Compute the buying and selling prices for this lottery and this utility function.
+\end{problem}
+\begin{answer}
+	(a) The minimum price at which the individual would sell the lottery (denoted as $R_S$) is the price at which the utility of their wealth after selling the lottery is equal to the expected utility of keeping the lottery. Mathematically, this is:
+		$$
+			u(w+R_S)=p \cdot u(w+G)+(1-p) \cdot u(w+B)
+		$$
+	(b) The maximum price at which the individual would buy the lottery (denoted as $R_B$) is the price at which the utility of their wealth after buying the lottery is equal to the utility without buying it. This can be represented as:
+		$$
+			u(w-G_B)=p \cdot u(w+G-R_B)+(1-p) \cdot u(w+B-R_B)
+		$$
+	(c) Generally, the buying and selling prices are not equal due to the concept of loss aversion in behavioral economics. People tend to value a good more when they own it (endowment effect) and are generally risk-averse, meaning they would require more to give up a good than they would be willing to pay to acquire it. The buying and selling prices will be equal only under conditions of risk neutrality, where the individual's utility function is linear.
+	\\
+	(d) Given $G=10$, $B=5$, $w=10$, and $u(x)=\sqrt{x}$, we can compute the buying and selling prices. For selling, solve $\sqrt{10+G_S}=p \cdot \sqrt{10+10}+(1-p) \cdot \sqrt{10+5}$. For buying, solve $\sqrt{10-G_B}=p \cdot \sqrt{10+10-G_B}+(1-p) \cdot \sqrt{10+5-G_B}$.
+\end{answer}
+
+\begin{problem}
+	Suppose that an individual has a Bernoulli utility function $u(x)=\sqrt{x}$.
+	\\
+	(a) Calculate the certainty equivalent and the probability premium for a gamble $(16, 4; \frac{1}{2}, \frac{1}{2})$.
+	\\
+	(b) Calculate the certainty equivalent and the probability premium for a gamble $(36, 16; \frac{1}{2}, \frac{1}{2})$.
+	\\
+	(c) Compare the result in (b) with the one in (a) and interpret.
+\end{problem}
+\begin{answer}
+	For a gamble $(G_1, G_2; p, 1-p)$,
+	\begin{itemize}
+		\item Certainty Equivalent: $u(CE)=p \cdot u\left(G_{1}\right)+(1-p) \cdot u\left(G_{2}\right)$
+		\item Probability Premium: $u(x)=\left[\frac{1}{2}+\pi(x, \varepsilon, u)\right] u(x+\varepsilon)+\left[\frac{1}{2}-\pi(x, \varepsilon, u)\right] u(x-\varepsilon)$
+	\end{itemize}
+	(a) $u(CE)=\frac{1}{2} \cdot \sqrt{16} + \frac{1}{2} \cdot \sqrt{4}$, $CE=9$.
+	$u(x)=\sqrt{16\times \frac{1}{2}+4\times \frac{1}{2}}=\sqrt{10}$, $u(x+\varepsilon)+u(x-\varepsilon)=4+2=6$, $u(x+\varepsilon)-u(x-\varepsilon)=4-2=2$, thus $\pi(x, \varepsilon, u)=\frac{\sqrt{10}-3}{2}$.
+	\\
+	(b) $u(CE)=\frac{1}{2} \cdot \sqrt{36} + \frac{1}{2} \cdot \sqrt{16}$, $CE=25$.
+	$u(x)=\sqrt{36\times \frac{1}{2}+16\times \frac{1}{2}}=\sqrt{26}$, $u(x+\varepsilon)+u(x-\varepsilon)=6+4=10$, $u(x+\varepsilon)-u(x-\varepsilon)=6-4=2$, thus $\pi(x, \varepsilon, u)=\frac{\sqrt{26}-5}{2}$.
+	\\
+	(c) The average value and the difference in certainty equivalent of the lotteries in (a) and (b) are both 1, but the probability premium of the lottery in (a) is higher.
+\end{answer}
+
+\begin{problem}
+	Consider an economy with two goods, good $l$ and a numeraire good, $2$ consumers, $i=1, 2,$ and 2 firms, $j=1, 2$. Let $x_{i}\in \mathbb{R}_{+}$ denote consumer $i$'s consumption of good $l$, and $m_{i}\in \mathbb{R}$ her consumption of the numeraire. The utility function of each consumer $i$ is given by: 
+	$$
+	\begin{aligned}
+		u_{i}(m_{i},x_{i}) &=m_{i}+1-\frac{(1-x_{i})^{2}}{2},\text{ if }0\leq x_{i}\leq 1 
+		\\&=m_{i}+1,\text{ if }x_{i}>1
+	\end{aligned}
+	$$
+	Each firm $j$ produces $q_{j}\geq 0$ units of good $l$ using amount $c_{j} (q_{j})$ of the numeraire  where
+	$$
+	c_{j}(q_{j})=(q_{j})^{2}
+	$$
+	Each consumer has an initial endowment of $50$ units of the numeraire and owns $\frac{1}{2}$ share of each firm.
+	\\
+	(a) Derive the competitive equilibrium.
+	\\
+	(b) Write down the set of all the efficient allocations in this economy.
+\end{problem}
+\begin{answer}
+	(a) Derive the competitive equilibrium.
+	\begin{itemize}
+		\item Each firm maximizes profits. 
+			$$
+			\begin{array}{c}
+				\max_{q_{j} \geqslant 0} p^{*} q_{j}-c_{j}\left(q_{j}\right)
+				\\
+				\text{s.t.}\  p^{*} \leqslant c_{j}^{\prime}\left(q_{j}^{*}\right)
+			\end{array}
+			$$
+		\item Each consumer maximizes utility subject to their budget constraint. 
+			$$
+			\begin{array}{c}
+				\max _{m_{i}, x_{i}} m_{i}+\phi_{i}\left(x_{i}\right)
+				\\
+				\text{s.t.}\ m_{i}+p^{*} x_{i} \leq w_{m_{i}}+\sum_{j=1}^{J} \theta\left[p^{*} q_{j}^{*}-c_{j}\left(q_{j}^{*}\right)\right]
+			\end{array}
+			$$
+	\end{itemize}
+	When $0\leq x_{1}\leq 1$ and $0\leq x_{2}\leq 1$, we have $\phi_{i}\left(x_{i}\right)=1-\frac{\left(1-x_{i}\right)^{2}}{2}$. Bring $c_j(q_j)=q_j^2$, $w_{mi}=50$, $\theta=0.5$ and $\phi_i^\prime(x_i)=1-x_i$ into competitive equilibrium conditions, we have 
+	$$
+	\left\{\begin{array}{l}p^{*} \leqslant 2 q_{1}^{*} \\ p^{*} \leqslant 2 q_{2}^{*} \\ 1-x_{1}^{*} \leq p^{*} \\ 1-x_{2}^{*} \leqslant p^{*} \\ x_{1}^{*}+x_{2}^{*}=q_{1}^{*}+q_{2}^{*} \\ m_{i}^{*}=50+\frac{1}{2} \sum_{j=1}^{J}\left(p^{*} q_{j}^{*}-q_{j}^{*^{2}}\right)-p^{*} x_{i}^{*}\end{array}\right.
+	\Rightarrow \quad
+	\left\{\begin{array}{l}x_{1}^{*}=\frac{1}{3} \\ x_{2}^{*}=\frac{1}{3} \\ q_{1}^{*}=\frac{1}{3} \\ q_{2}^{*}=\frac{1}{3} \\ p^{*}=\frac{2}{3} \\ m_{1}=m_{2}=49 \frac{8}{9}\end{array}\right.
+	$$
+	The competitive equilibrium is $(\frac{1}{3}, \frac{1}{3}, \frac{1}{3}, \frac{1}{3}, 49 \frac{8}{9}, 49 \frac{8}{9})$, $p^{*}=\frac{2}{3}$.
+	\\
+	When $x_i\geq 1$, $\phi_i(x_i)=1$, thus we have $x_1=x_2=1$. Now the competitive equilibrium conditions is
+	$$
+	\left\{\begin{array}{l}x_{1}^{*}=1 \\ x_{2}^{*}=1 \\ p^{*} \leq 2 q_{1}^{*} \\ p^{*} \leq 2 q_{2}^{*} \\ x_{1}^{*}+x_{2}^{*}=q_{1}^{*}+q_{2}^{*} \\ m_{i}^{*}=50+\sum_{j=1}^{J} \frac{1}{2}\left(p^{*} q_{j}^{*}-q_{j}^{2}\right)-p^{*} x_{i}^{*}\end{array}\right.
+	\Rightarrow \quad
+	\left\{\begin{array}{l}x_{1}^{*}=1 \\ x_{2}^{*}=1 \\ q_{1}^{*}=1 \\ q_{2}^{*}=1 \\ p^{*}=2 \\ m_{1}^{*}=m_{2}^{*}=49\end{array}\right.
+	$$
+	The competitive equilibrium is $(1, 1, 1, 1, 49, 49)$, $p^{*}=2$.
+	\\
+	(b) Utilize the entire endowment and production without waste.
+	$$
+	\begin{array}{c}
+		M_{x_{i}, q_{j}} \sum_{i=1}^{N} \phi_{i}\left(x_{i}\right)+w_{m}-\sum_{j=1}^{J} c_{j}\left(q_{j}\right)
+		\\
+		\text{s.t.}\ x_{1} \geqslant 0, q_{j} \geqslant 0, \sum_{i=1}^{N} x_{i}=\sum_{j=1}^{J} q_{j}
+	\end{array}
+	$$
+	$$
+	\mathcal{L}=\sum_{i=1}^{N} \phi_{i}\left(x_{i}\right)+w_{m}-\sum_{j=1}^{J} c_{j}\left(q_{j}\right)+\lambda\left(\sum_{i=1}^{N} x_{i}-\sum_{j=1}^{J} q_{j}\right)
+	$$
+	Thus we have
+	$$
+	\left\{\begin{array}{l}\lambda \leqslant c_{j}^{\prime}\left(q_{j}^{*}\right) \\ \phi_{i}^{\prime}\left(x_{i}^{*}\right) \leqslant \lambda \\ \sum_{i=1}^{N} x_{i}^{*}=\sum_{j=1}^{J} q_{j}^{*} \\ \sum_{i=1}^{N} m_{i}=w_{m}-\sum_{j=1}^{J} c_{j}\left(q_{j}^{*}\right)\end{array}\right.
+	$$
+	When $0 \leq x_{i} \leq 1$, we have
+	$$
+	\left\{\begin{array}{l}\lambda \leq 2 q_{j} \\ 1-x_{i} \leq \lambda \\ x_{1}^{*}+x_{2}^{*}=q_{1}^{*}+q_{2}^{*} \\ m_{1}^{*}+m_{2}^{*}=100-q_{1}^{* 2}-q_{2}^{* 2}\end{array}\right.
+	\Rightarrow \quad
+	\left\{\begin{array}{l}x_{1}^{*}=x_{2}^{*}=\frac{1}{3} \\ q_{1}^{*}=q_{2}^{*}=\frac{1}{3} \\ m_{1}^{*}=m_{2}^{*}=49 \frac{8}{3} \\ \lambda=\frac{2}{3}\end{array}\right.
+	$$
+	Now the efficient allocations is $\left(\frac{1}{2}, \frac{1}{2}, \frac{1}{3}, \frac{1}{3}, 49 \frac{8}{9}, 49 \frac{8}{9}\right)$.
+	\\
+	When $x_i \geq 1$, $\phi_i(x_i)=1$, we have
+	$$
+	\left\{\begin{array}{l}\lambda \leqslant 2 q_{j} \\ x_{1}^{*}+x_{2}^{*}=q_{1}^{*}+q_{2}^{*} \\ m_{1}^{*}+m_{2}^{*}=100-q_{1}^{* 2}-q_{2}^{* 2}\end{array}\right.
+	\Rightarrow \quad
+	\left\{\begin{array}{l}x_{1}^{*}=x_{2}^{*}=q_{1}^{*}=q_{2}^{*}=1 \\ m_{1}^{*}=m_{2}^{*}=49 \\ \lambda=2\end{array}\right.
+	$$
+	Now the efficient allocations is $(1, 1, 1, 1, 49, 49)$.
+\end{answer}
+
+\begin{problem}
+	\\
+	(a) Suppose that the preference relation $\succeq$ on the set of lotteries $\mathcal{L}$  is complete. Show that $\succeq$ satisfies the independence axiom if and only if the following property holds:
+	
+	\emph{For all $L_{1},L_{2},L_{3}\in \mathcal{L}$ and $\alpha\in (0,1)$, $L_{1}\succ L_{2} \ \text{if and only if} \ \alpha L_{1}+(1-\alpha)L_{3}\succ \alpha L_{2}+(1-\alpha)L_{3}$.}
+	\\
+	(b) Show that if $\succeq$ on $\mathcal{L}$ satisfies the independence axiom, then the following property holds:
+	
+	\emph{For all $L_{1},L_{2},L_{3}\in \mathcal{L}$ and $\alpha\in (0,1)$, $L_{1}\sim L_{2} \ \text{if and only if} \ \alpha L_{1}+(1-\alpha)L_{3}\sim \alpha L_{2}+(1-\alpha)L_{3}$.}
+\end{problem}
+\begin{answer}
+	(a) If part: Assume $L_1 \succ L_2$. By the independence axiom, for any lottery $L_3$ and any $\alpha \in (0, 1)$, it follows that $\alpha L_{1}+(1-\alpha) L_{3} \succ \alpha L_{2}+(1-\alpha) L_{3}$. This is because the independence axiom states that if a lottery $L_1$ is preferred over $L_2$, then a mixed lottery that involves $L_1$ with probability $\alpha$ and any other lottery $L_3$ with probability $1-\alpha$ is also preferred over a mixed lottery that involves $L_2$ and $L_3$ in the same proportions.
+	\\
+	Only if part: Assume $\alpha L_{1}+(1-\alpha) L_{3} \succ \alpha L_{2}+(1-\alpha) L_{3}$. By the given property, it must be that $L_{1} \succ L_{2}$. This is because the property states that the preference between $L_1$ and $L_2$ is consistent with the preference between the mixed lotteries $\alpha L_{1}+(1-\alpha) L_{3}$ and $\alpha L_{2}+(1-\alpha) L_{3}$. Therefore, the preference relation satisfies the independence axiom.
+	\\
+	(b) If part: Assume that $\alpha L_{1}+(1-\alpha) L_{3} \sim \alpha L_{2}+(1-\alpha) L_{3}$ implies $L_1 \succ L_2$ instead of $L_1 \sim L_2$. Thus we have $\alpha L_{1}+(1-\alpha) L_{3} \succ \alpha L_{2}+(1-\alpha) L_{3}$ according to (a), contradiction. 
+	\\
+	Only if part: Assume that $L_1 \sim L_2$ implies $\alpha L_{1}+(1-\alpha) L_{3} \succ \alpha L_{2}+(1-\alpha) L_{3}$ instead of $\alpha L_{1}+(1-\alpha) L_{3} \sim \alpha L_{2}+(1-\alpha) L_{3}$, thus we have $L_1 \succ L_2$ according to (a), contradiction.
+\end{answer}
+\end{document}
