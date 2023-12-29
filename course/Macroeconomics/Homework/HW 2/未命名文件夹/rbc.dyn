@@ -1,0 +1,66 @@
+% An Example of RBC Model
+% Benchmark version.
+% Huabin Wu, May. 12, 2020
+
+%----------------------------------------------------------------
+% 0. Housekeeping
+%----------------------------------------------------------------
+close all;
+
+%----------------------------------------------------------------
+% 1. Defining variables
+%----------------------------------------------------------------
+var y c k N i w r A; 
+varexo ea; 
+
+parameters alf  bta tht dlt rhoa siga gz n gam;
+
+%----------------------------------------------------------------
+% 2. Calibration
+%----------------------------------------------------------------
+alf = 1/3;  bta = 1/1.04;  dlt = 0.1; n = 0.5; %dlt = 0.999025;
+gz  = 1;    rhoa = 0.9;    siga = 0.01; 
+load sigma;  
+gam=sigma;
+%----------------------------------------------------------------
+% 3. Model
+%----------------------------------------------------------------
+model; 
+  N^gam/w=1/(c-n*c(-1))-n*bta/(c(+1)-n*c);
+  N^(gam)*gz/w = bta*N(+1)^(gam)*(1+r(+1))/w(+1);
+  y = A*k(-1)^alf * N^(1-alf);
+  r = alf*y/k(-1)-dlt;
+  w = (1-alf)*y/N;
+  log(A) = rhoa*log(A(-1))+ea;
+  i = gz*k-(1-dlt)*k(-1);
+  y = c+i;
+end;
+
+%----------------------------------------------------------------
+% 4. Computation
+%----------------------------------------------------------------
+% initval; % not necessary if steadystate file specified
+%   y = 1.4708;  c = 1.1206; k = 3.50207;   
+%   N = 0.95323; i = 0.350207; w = 1.0287; 
+%   r = 0.04;  A = 1; 
+% end;
+
+steady_state_model;
+  r  = gz/bta-1; A = 1;
+  ky = alf/(r+dlt);
+  cy = 1-(gz-1+dlt)*ky; 
+  ny =(ky^alf)^(1/(alf-1));
+  w  = (1-alf)/ny;
+  y  = (w*(1-n*bta)/(1-n)/cy/(ny)^gam)^(1/(gam+1)); % tht=1
+  c  = cy*y; k = ky*y; N= ny*y;
+  i  = (gz-1+dlt)*k;
+end;
+
+steady;
+
+shocks;
+  var  ea = siga^2;
+end;
+
+stoch_simul(order=1,irf=50,loglinear) y c i k N A r w;
+
