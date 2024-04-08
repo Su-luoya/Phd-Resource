@@ -42,8 +42,8 @@ Haotian Deng
 %\inst{2}
 } 
 %% Title & Subtitle
-\title[Gods' Fight about ...]{Gods' Fight about ...}
-\subtitle{Andrew Chen vs. HLZ}
+\title[Whether most claimed research findings in financial economics are likely true or false?]{Gods' Fight about ...}
+\subtitle{Andrew Chen vs. HLZ \\ }
 %% Institution
 \institute[SUFE]
 {
@@ -87,21 +87,196 @@ Shanghai University of Finance and Economics
 \end{frame}
 
 % Body
-\section{Background}
-
-\begin{frame}{lalala}
-	\textcolor{sufered}{hk}
-	1234543
-	\cite{Greiner2008}
-	啦啦啦也还行啊不算很慢的
+\section{Author}
+\begin{frame}{Campbell R. Harvey}
+	Former president of the American Finance Association
+	\begin{itemize}
+		\item p-hacking and Bayesianized p-value
+		\item Presidential Address: The Scientific Outlook in Financial Economics
+		\item Bayesian Inference in Asset Pricing Tests
+		\item … and the Cross-Section of Expected Returns
+		\item False (and Missed) Discoveries in Financial Economics
+		\item Tortured Data (in SFS), Lucky Factors (in Jacobs Levy Center’s Conference)
+	\end{itemize}
+	Abstracting from the \alert{financial crisis}, we conclude that active management of both equity and fixed income has significantly contributed to the returns of the fund.
+\end{frame}
+\begin{frame}{Andrew Y. Chen}
+	\begin{itemize}
+		\item \alert{Publication Bias} in Asset Pricing Research
+		\item Peer-reviewed theory does \alert{not} help predict the cross-section of stock returns
+		\item \alert{Zeroing} In on the Expected Returns of Anomalies
+		\item Do t-Statistic Hurdles Need to be Raised?
+		\item In Full-Information Estimates, Long-Run Risks Explain at Most a Quarter of P/D Variance, and Habit Explains Even Less
+		\item The Limits of \alert{p-Hacking}: A Thought Experiment
+	\end{itemize}
 \end{frame}
 
-\section{Literature Review}
-\begin{frame}
-	123
+\section{Motivation}
+\begin{frame}{If you torture the data long enough, it will confess.}
+	\begin{itemize}
+		\item \alert{Hundreds} of cross-sectional stock return \alert{predictors}.
+			\begin{itemize}
+				\item Anomalies, Factors and Multi-Factor Models.
+				\item GRS Tests, Mean-Variance Spanning Tests and Bayesian Approach.
+			\end{itemize}
+		\item \alert{Usual cutoff levels} may not be \alert{appropriate}.
+		\item A \alert{debate} about the veracity of this predictors.
+	\end{itemize}
+	\begin{itemize}
+		\item Harvey, Liu, and Zhu (2016):
+			\\
+			Why Most Claimed Statistical Findings Are \alert{False}?
+		\item Chen (2024):
+			\\
+			Why Most Claimed Statistical Findings Are \alert{True}?
+	\end{itemize}
+	\begin{center}
+		How to judge?\\
+		\alert{False Discovery Rate (FDR)}
+	\end{center}
+\end{frame}
+\begin{frame}{Type I Error and False Discovery Rate}
+	\begin{table}
+	    \centering
+	    \caption{Contingency table in testing $M$ hypotheses}
+	    \vspace{-0.5cm}
+	    \setlength{\tabcolsep}{2mm}
+		    {
+		    \begin{tabular}{lccc}
+		    \hline
+	         & Unpublished & Published & Total\\ \hline
+	        Truly insignificant & 800($N_{0|a}$) & \alert{10($N_{0|r}$)} & 810\\ 
+	        Truly significant & 100($N_{1|a}$) & 90($N_{1|r}$) & 190\\
+	        Total & 900($M-R$) & 100($R$) & 1000($M$)\\ \hline
+		    \end{tabular}
+		    }
+	    \label{fig1}
+	\end{table}
+	\begin{center}
+		How to measure the \alert{type I error} for multiple test ?
+		$$
+		\mathrm{FDR} = \mathbb{E}(\frac{N_{0 \mid r}}{R})
+		$$
+	\end{center}
 \end{frame}
 
+\section{Why Most Claimed Statistical Findings Are False}
+\begin{frame}{Benjamini, Hochberg, and Yekutieli’s (BHY) Adjustment}
+	\begin{enumerate}
+		\item Order the original $p$-values such that $$p_{(1)} \leq p_{(2)} \leq \cdots p_{(b)} \leq \cdots \leq p_{(M)}$$
+		\item Let $k$ be the maximum index such that $$p_{(b)} \leq \frac{b}{M \times c(M)} \alpha_{d}$$
+		\item Reject null hypotheses $H_{(1)} \cdots H_{(k)}$, but not others
+	\end{enumerate}
+	$$
+	p_{(i)}^{\text{BHY}}=\left\{\begin{array}{cl}p_{(M)} & \text { if } i=M, \\ \min \left[p_{(i+1)}^{\text{BHY}}, \frac{M \times c(M)}{i} p_{(i)}\right] & \text { if } i \leq M-1,\end{array}\right.
+	$$
+\end{frame}
+\begin{frame}{Multiple Test Thresholds}
+	\begin{figure}[htpb]
+  	\begin{center}
+    	\includegraphics[width=0.85 \linewidth]
+    	{pic/Multiple_test_thresholds.jpg}
+%    \caption{}
+  	\end{center}
+	\end{figure}
+\end{frame}
+\begin{frame}{Adjusted t-statistics, 1965–2032}
+	\begin{figure}[htpb]
+  		\begin{center}
+    	\includegraphics[width=1.05 \linewidth]
+    	{pic/Adjusted-t-statistics.jpg}
+	  	\end{center}
+	\end{figure}
+\end{frame}
+\begin{frame}{An important Philosophical Issue and Conclusion}
+	Why should we have a higher threshold for today’s data mining than for data mining in the 1980s?
+	\begin{enumerate}
+		\item The rate of \alert{discovering} a true factor has decreased.
+		\item There is a limited amount of \alert{data} (CRSP database).
+		\item The \alert{cost} of data mining has dramatically decreased.
+	\end{enumerate}
+	\\\ \\
+	Many of the factors discovered in the field of finance are likely false discoveries: of the 296 published significant factors, 158 would be considered false discoveries under Bonferonni, 142 under Holm, 132 under BHY (1\%), and 80 under BHY (5\%)
+\end{frame}
 
+\section{Why Most Claimed Statistical Findings Are True}
+\begin{frame}{``easy bound" on $\mathrm{FDR}_{|t|>2}$}
+%	When someone discovered that coins are more likely to land heads (i.e. the coin toss is not fair), then we have
+	$$
+	\begin{aligned} 
+		\mathrm{FDR}_{|t|>2} 
+		& \approx \underbrace{\operatorname{Pr}\left(F_{i}\mid |t_{i}|>2\right)}_{\text{the predictor is false when}\ t>2}
+		 = \frac{
+		{
+		\operatorname{Pr}\left(\left|t_{i}\right|>2 \mid F_{i}\right)}
+		}
+		{
+		\operatorname{Pr}\left(\left|t_{i}\right|>2\right)
+		} 
+		\operatorname{Pr}\left(F_{i}\right) 
+		\\ \ \\
+		& \leq 
+		\frac{
+		\underbrace{\operatorname{Pr}\left(\left|t_{i}\right|>2 \mid F_{i}\right)}_{t>2 \ \text{when the predictor is false}}
+		}{\operatorname{Pr}\left(\left|t_{i}\right|>2\right)}  
+		 \approx \frac{5 \%}
+		{\operatorname{Pr}\left(\left|t_{i}\right|>2\right)}
+	\end{aligned}
+	$$
+	\begin{itemize}
+		\item One might estimate $\operatorname{Pr}\left(\left|t_{i}\right|>2\right)$ by just counting the share of $|t_i|>2$.
+		\item Since publication bias, $\operatorname{Pr}\left(\left|t_{i}\right|>2\right)$ may be overstated.
+		\item This problem can be addressed by considering \alert{worst-case scenarios}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Bounding the FDR using Data-Mining as a Worst-Case}
+	\begin{figure}[htpb]
+  		\begin{center}
+    	\includegraphics[width=0.9 \linewidth]
+    	{pic/Data-Mining.jpg}
+  		\end{center}
+	\end{figure}
+	\begin{center}
+		Thus, at least 84.6\% of published predictors are true.
+	\end{center}
+\end{frame}
+
+\begin{frame}{Bounding the FDR with Conservative Extrapolation}
+	\begin{figure}[htpb]
+  		\begin{center}
+    	\includegraphics[width=0.9 \linewidth]
+    	{pic/Conservative_Extrapolation.jpg}
+  		\end{center}
+	\end{figure}
+	$$
+	\mathrm{FDR}_{|t|>2} \leq \frac{5 \%}{\exp \left[-2 / \mathbb{E}\left(\left|t_{i}\right|\right)\right]}=\frac{5\%}{0.37}=13.6 \% \
+	(\text{exponential CDF})
+	$$
+	\\
+	$$
+	\mathbb{E}\left(\left|t_{i}\right|\right)=\mathbb{E}\left(\left|t_{i}\right|\mid| t_{i}|>2\right)-2 \quad
+	(\text{Due to the memoryless property})
+	$$
+\end{frame}
+
+\begin{frame}{Two Interpretations of ``False Factor"}
+\begin{multicols}{2}
+	\begin{figure}[htpb]
+  		\begin{center}
+    	\includegraphics[width=0.88 \linewidth]
+    	{pic/SMM.jpg}
+  		\end{center}
+	\end{figure}
+	\begin{itemize}
+		\item HLZ’s estimates imply $\mathrm{FDR}_{|t|>2} \approx 9 \%$
+		\item why do they (HLZ) argue that ``most ... are more likely false?"
+		\item ``false factor" vs ``insignificant factor"  (158/296=53\%)
+		\item ``most" vs ``many" (80/296=27\%)
+		\item ``null" vs ``insignificant"
+	\end{itemize}
+\end{multicols}
+\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % End
@@ -113,65 +288,67 @@ Shanghai University of Finance and Economics
 
 % Reference
 %\appendix
-\begin{frame}{Reference}
-	\addtocounter{framenumber}{-1}
-	\printbibliography % [heading=bibintoc, title=Reference]
-\end{frame}
+%\begin{frame}{Reference}
+%	\addtocounter{framenumber}{-1}
+%	\printbibliography % [heading=bibintoc, title=Reference]
+%\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Snippets
-\begin{frame}[noframenumbering, plain]{Snippets}
-	\begin{multicols}{2}
-		\begin{enumerate}
-			\item \cite[Page10]{barro1990}
-			\item parencite \\ \parencite{Greiner2008}
-			\item footcite \footcite{green2020}
-			\item \cite{Greiner2008}
-		\end{enumerate}
-		\begin{itemize}
-			\item \[V = \frac{4}{3}\pi r^3\]
-			\item $ V = \frac{4}{3}\pi r^3 $
-		\end{itemize}
-	\end{multicols}	
-	\begin{equation}
-		\label{eq1}
-		V = \frac{4}{3}\pi r^3
-	\end{equation}
-	\center 
-	As Equation(\ref{eq1}) shows, $\cdots$, this \emph{equation} is \alert{important}.
-\end{frame}
-
-\begin{frame}[noframenumbering, plain]{Snippets}
-	\begin{columns}
-		\column{0.5\textwidth}
-			\begin{block}{Remark}
-				Sample text
-			\end{block}
-			\begin{alertblock}{Important theorem}
-				Sample text in red box
-			\end{alertblock}
-			\begin{examples}
-				Sample text in green box. 
-			\end{examples}
-		\column{0.5\textwidth}
-			\begin{table}
-			    \centering
-			    \caption{table1}
-			    \vspace{-0.5cm}
-			    \setlength{\tabcolsep}{5mm}
-				    {
-				    \begin{tabular}{lcc}
-				    \hline
-			        123 & 123 & ad f \\ \hline
-			        \textcolor{deepred}{123} & w & ad f \\ 
-			        \textcolor{sufered}{123} & \alert{ad} f & ad s f \\ \hline
-				    \end{tabular}
-				    }
-			    \label{fig1}
-			\end{table}
-	\end{columns}
-\end{frame}
+%\begin{frame}[noframenumbering, plain]{Snippets}
+%	\begin{multicols}{2}
+%		\begin{enumerate}
+%			\item \cite[Page10]{barro1990}
+%			\item parencite \\ \parencite{Greiner2008}
+%			\item footcite \footcite{green2020}
+%			\item \cite{Greiner2008}
+%		\end{enumerate}
+%		\begin{itemize}
+%			\item \[V = \frac{4}{3}\pi r^3\]
+%			\item $ V = \frac{4}{3}\pi r^3 $
+%		\end{itemize}
+%	\end{multicols}	
+%	\begin{equation}
+%		\label{eq1}
+%		V = \frac{4}{3}\pi r^3
+%	\end{equation}
+%	\center 
+%	As Equation(\ref{eq1}) shows, $\cdots$, this \emph{equation} is \alert{important}.
+%\end{frame}
+%
+%
+%
+%\begin{frame}[noframenumbering, plain]{Snippets}
+%	\begin{columns}
+%		\column{0.5\textwidth}
+%			\begin{block}{Remark}
+%				Sample text
+%			\end{block}
+%			\begin{alertblock}{Important theorem}
+%				Sample text in red box
+%			\end{alertblock}
+%			\begin{examples}
+%				Sample text in green box. 
+%			\end{examples}
+%		\column{0.5\textwidth}
+%			\begin{table}
+%			    \centering
+%			    \caption{table1}
+%			    \vspace{-0.5cm}
+%			    \setlength{\tabcolsep}{5mm}
+%				    {
+%				    \begin{tabular}{lcc}
+%				    \hline
+%			        123 & 123 & ad f \\ \hline
+%			        \textcolor{deepred}{123} & w & ad f \\ 
+%			        \textcolor{sufered}{123} & \alert{ad} f & ad s f \\ \hline
+%				    \end{tabular}
+%				    }
+%			    \label{fig1}
+%			\end{table}
+%	\end{columns}
+%\end{frame}
 %\backupend
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{CJK*}
