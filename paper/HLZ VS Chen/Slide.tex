@@ -110,32 +110,43 @@ Shanghai University of Finance and Economics
 		\item The Limits of \alert{p-Hacking}: A Thought Experiment
 	\end{itemize}
 \end{frame}
+\begin{frame}{ABSTRACT\ →\ 摘要？抽象！}
+	Suppose that the 300+ published asset pricing factors are all spurious. How much p-hacking is required to produce these factors? If 10,000 researchers generate eight factors every day, it takes hundreds of years. This is because dozens of published t-statistics exceed 6.0, while the corresponding p-value is infinitesimal, implying an astronomical amount of p-hacking in a general model. More structure implies that p-hacking cannot address  ≈ 100 published t-statistics that exceed 4.0, as they require an implausibly nonlinear preference for t-statistics or even more p-hacking. These results imply that mis-pricing, risk, and/or frictions have a key role in stock returns.
+\end{frame}
 
 \section{Motivation}
-\begin{frame}{If you torture the data long enough, it will confess.}
+\begin{frame}{$p$-hacking: racing down the path in pursuit of $p$-value}
 	\begin{itemize}
-		\item \alert{Hundreds} of cross-sectional stock return \alert{predictors}.
-			\begin{itemize}
-				\item Anomalies, Factors and Multi-Factor Models.
-				\item GRS Tests, Mean-Variance Spanning Tests and Bayesian Approach.
-			\end{itemize}
-		\item \alert{Usual cutoff levels} may not be \alert{appropriate}.
-		\item A \alert{debate} about the veracity of this predictors.
-	\end{itemize}
-	\begin{itemize}
-		\item Harvey, Liu, and Zhu (2016):
-			\\
-			Why Most Claimed Statistical Findings Are \alert{False}?
-		\item Chen (2024):
-			\\
-			Why Most Claimed Statistical Findings Are \alert{True}?
+		\item Once the null hypothesis that "the expected return of the factor is zero" is rejected, people will readily assume that "the expected return of the factor is significantly non-zero", and that "the lower the p-value, the more significant the expected return of the factor", thus pursuing lower p-values.
+		\item A sufficiently low p-value is only a necessary condition, not a sufficient condition, for the significance of factor expected returns being non-zero.
+		\item Intentional or unintentional data snooping and data manipulation, multiple hypothesis testing problems.
 	\end{itemize}
 	\begin{center}
-		How to judge?\\
-		\alert{False Discovery Rate (FDR)}
+		If you torture the data long enough, it will confess.
 	\end{center}
 \end{frame}
-\begin{frame}{Type I Error and False Discovery Rate}
+\begin{frame}{Publication Bias}
+	\begin{itemize}
+		\item From the perspective of driving scientific progress, "ineffective factors" and "effective factors" are equally important.
+		\item If it can be conclusively proven that a certain factor cannot deliver excess returns, then people can confidently avoid that factor, making it still very valuable to investment practice.
+		\item Driven by utilitarian motives, scholars are more willing to spend their research time and energy on factors with low p-values that can be found through various means, only willing to publish the "most significant" research findings, rather than taking the risk to study "ineffective factors".
+	\end{itemize}
+\end{frame}
+\begin{frame}{Soft Science vs. Hard Science}
+	Why there are so many low p-value factors?
+	\begin{itemize}
+		\item Hard science: Unaffected by researchers' personal preferences, conclusions can be directly drawn from the data, and are highly generalizable.
+		\item Soft science: Easily influenced by the researcher's personal preferences since research results depend on how hypotheses are formulated, how data are processed, and how results are interpreted.
+	\end{itemize}
+\end{frame}
+\begin{frame}{$p-$value and multiple hypothesis testing}
+	\begin{itemize}
+		\item $p-$value $\equiv \textbf{prob}(D\mid H_0) \neq \textbf{prob}(H_0\mid D)$
+		\item multiple hypothesis testing
+		\item type I error and false discovery rate 
+		$$\mathrm{FDR} = \mathbb{E}(\frac{N_{0 \mid r}}{R})$$
+	\end{itemize}
+	\vspace{-0.5cm}
 	\begin{table}
 	    \centering
 	    \caption{Contingency table in testing $M$ hypotheses}
@@ -152,13 +163,30 @@ Shanghai University of Finance and Economics
 		    }
 	    \label{fig1}
 	\end{table}
-	\begin{center}
-		How to measure the \alert{type I error} for multiple test ?
-		$$
-		\mathrm{FDR} = \mathbb{E}(\frac{N_{0 \mid r}}{R})
-		$$
-	\end{center}
 \end{frame}
+%\begin{frame}{If you torture the data long enough, it will confess.}
+%	\begin{itemize}
+%		\item \alert{Hundreds} of cross-sectional stock return \alert{predictors}.
+%			\begin{itemize}
+%				\item Anomalies, Factors and Multi-Factor Models.
+%				\item GRS Tests, Mean-Variance Spanning Tests and Bayesian Approach.
+%			\end{itemize}
+%		\item \alert{Usual cutoff levels} may not be \alert{appropriate}.
+%		\item A \alert{debate} about the veracity of this predictors.
+%	\end{itemize}
+%	\begin{itemize}
+%		\item Harvey, Liu, and Zhu (2016):
+%			\\
+%			Why Most Claimed Statistical Findings Are \alert{False}?
+%		\item Chen (2024):
+%			\\
+%			Why Most Claimed Statistical Findings Are \alert{True}?
+%	\end{itemize}
+%	\begin{center}
+%		How to judge?\\
+%		\alert{False Discovery Rate (FDR)}
+%	\end{center}
+%\end{frame}
 
 \section{Why Most Claimed Statistical Findings Are False}
 \begin{frame}{Benjamini, Hochberg, and Yekutieli’s (BHY) Adjustment}
@@ -278,7 +306,15 @@ Shanghai University of Finance and Economics
 \end{multicols}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\begin{frame}{From ``Factor War" to ``Test War"}
+	\begin{itemize}
+		\item Lo and MacKinlay (1990): Data snooping can cause problems in testing asset pricing models.
+		\item Sullivan et al. (1999): How to correct the impact of data snooping bias
+		\item Harvey et al. (2016): After excluding the impact of multiple hypothesis testing, ``the vast majority" fail to achieve significant excess returns.
+		\item Linnainmaa and Roberts (2018): Constructe new out-of-sample data to test.
+		\item Chordia et al. (2020): Creative use of simulation methods to infer how statistical characteristics of study-based factor sets can eliminate the effects of multiple hypothesis testing。
+	\end{itemize}
+\end{frame}
 % End
 \begin{frame}[allowframebreaks]%{End}
 	\begin{center}
