@@ -1,2 +1,2 @@
 # Phd Resource
- My study materials and document resources for my Phd.
+ My study materials and document resources for Phd.
